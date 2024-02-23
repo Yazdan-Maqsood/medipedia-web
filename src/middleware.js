@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
 export async function middleware(request) {
-  let cookie = request.cookies.get('next-auth.session-token');
+  //let cookie = request.cookies.get('next-auth.session-token');
+  let cookie = request.cookies.get('__Secure-next-auth.session-token');
 
   const authenticatedRoutes = ['/login', '/register','/forgot-password'];
   const nonAuthRoutesPatterns = [
