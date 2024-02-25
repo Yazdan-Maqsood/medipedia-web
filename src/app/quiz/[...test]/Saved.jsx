@@ -10,6 +10,7 @@ import { revalidatePath } from 'next/cache'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Reprt from '@/app/components/Reprt';
+import GoogleGpt from './GoogleGpt';
 
 export default function Saved(props) {
     const [isLoading, setIsLoading] = useState(true); // State variable for loading
@@ -51,7 +52,7 @@ export default function Saved(props) {
             }
         }
 
-    }, [indexskip]);
+    }, []);
 
     useEffect(() => {
         if (shuuflephase) {
@@ -125,7 +126,7 @@ export default function Saved(props) {
                     settotal(total + 1);
                     console.log(skiparr[indexskip])
                     console.log(indexskip)
-    
+
                 }
             }
 
@@ -415,6 +416,19 @@ export default function Saved(props) {
                             <div>Marks : {marks}</div>
                             <div>Q : {total}/{totaldata}</div>
                         </div>
+                        {!shuuflephase ? (
+                            props.data[index].setoptans == null ? (
+                                <></>
+                            ) : (
+                                <GoogleGpt Ques={props.data[index].ques}   ></GoogleGpt>
+                            )
+                        ) : (
+                            skiparr[indexskip].setoptans == null ? (
+                                <></>
+                            ) : (
+                                <GoogleGpt Ques={skiparr[indexskip].ques}   ></GoogleGpt>
+                            )
+                        )}
                         <div className="quiz-lay-thr mt-4">
                             <div>
                                 <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">

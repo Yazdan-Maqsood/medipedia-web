@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Reprt from '@/app/components/Reprt';
+import GoogleGpt from './GoogleGpt';
 
 export default function page(props) {
     const [isLoading, setIsLoading] = useState(true); // State variable for loading
@@ -281,8 +282,6 @@ export default function page(props) {
         calculateTimeBasedOnLength(props.data.length);
     }, []);
 
-
-
     const calculateTimeBasedOnLength = (length) => {
         let hours = 0;
         if (length <= 50) {
@@ -349,7 +348,6 @@ export default function page(props) {
         return () => clearInterval(timer); // Cleanup timer on unmount
     }, [duration]); // Include duration in the dependency array
 
-
     const save = () => {
         MySwal.fire({
             title: "Save Quiz",
@@ -367,222 +365,241 @@ export default function page(props) {
         })
     }
 
-
-
     return (
         <>
             {isLoading ? (
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-            </div>
             ) : (
-            <div className="col-lg-10 col-md-10 ps-0">
-                <div className="sign-up-form">
-                    <div className="timr">
-                        <div>{duration.hours.toString().padStart(2, '0')}</div>
-                        <div>{duration.minutes.toString().padStart(2, '0')}</div>
-                        <div>{duration.seconds.toString().padStart(2, '0')}</div>
-                    </div>
-                    <div className="quiz-lay-2 mt-4">
-                        <div>Marks : {marks}</div>
-                        <div>Q : {total}/{totaldata}</div>
-                    </div>
-                    <div className="quiz-lay-thr mt-4">
-                        <div>
-                            <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">
-                                Save <i className="fa fa-save" />
-                            </button>
-                            <button style={{ marginRight: '5px' }} onClick={reset} className="btn btn-cus btn-md">
-                                Reset <i className="fa fa-refresh" />
-                            </button>
-                            {!shuuflephase ? (
-                                <Reprt test_id={props.data[index].test_id} question_id={props.data[index].id} ></Reprt>
-                            ) : (
-                                <Reprt test_id={skiparr[indexskip].test_id} question_id={skiparr[indexskip].id} ></Reprt>
-
-                            )}
+                <div className="col-lg-10 col-md-10 ps-0">
+                    <div className="sign-up-form">
+                        <div className="timr">
+                            <div>{duration.hours.toString().padStart(2, '0')}</div>
+                            <div>{duration.minutes.toString().padStart(2, '0')}</div>
+                            <div>{duration.seconds.toString().padStart(2, '0')}</div>
                         </div>
-                    </div>
+                        <div className="quiz-lay-2 mt-4">
+                            <div>Marks : {marks}</div>
+                            <div>Q : {total}/{totaldata}</div>
+                        </div>
+                        {!shuuflephase ? (
 
-                    {!shuuflephase ? (
-                        <>
-                            <h3 className="mt-4 fs-20">
-                                {props.data[index].ques}
-                            </h3>
+                            props.data[index].setoptans == null ? (
+                                <></>
+                            ) : (
+                                <GoogleGpt Ques={props.data[index].ques}   ></GoogleGpt>
 
-                            <div className="row">
+                            )
 
-                                {props.data[index].op1 &&
 
-                                    <div
-                                        style={props.data[index].setoptans == "A" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "A" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={props.data[index].setoptans == null ? () => option(props.data[index].op1, props.data[index].ans, "A") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        A: {props.data[index].op1}
-                                    </div>
+                        ) : (
+                            skiparr[indexskip].setoptans === "" ? (
+                                <></>
+                            ) : (
+                                <GoogleGpt Ques={skiparr[indexskip].ques}   ></GoogleGpt>
+                            )
 
-                                }
+                        )}
 
-                                {props.data[index].op2 &&
 
-                                    <div
-                                        style={props.data[index].setoptans == "B" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "B" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={props.data[index].setoptans == null ? () => option(props.data[index].op2, props.data[index].ans, "B") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        B: {props.data[index].op2}
-                                    </div>
+                        <div className="quiz-lay-thr mt-4">
+                            <div>
+                                <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">
+                                    Save <i className="fa fa-save" />
+                                </button>
+                                <button style={{ marginRight: '5px' }} onClick={reset} className="btn btn-cus btn-md">
+                                    Reset <i className="fa fa-refresh" />
+                                </button>
+                                {!shuuflephase ? (
+                                    <Reprt test_id={props.data[index].test_id} question_id={props.data[index].id} ></Reprt>
+                                ) : (
+                                    <Reprt test_id={skiparr[indexskip].test_id} question_id={skiparr[indexskip].id} ></Reprt>
 
-                                }
-
-                                {props.data[index].op3 &&
-
-                                    <div
-                                        style={props.data[index].setoptans == "C" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "C" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={props.data[index].setoptans == null ? () => option(props.data[index].op3, props.data[index].ans, "C") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        C: {props.data[index].op3}
-                                    </div>
-
-                                }
-
-                                {props.data[index].op4 &&
-
-                                    <div
-                                        style={props.data[index].setoptans == "D" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "D" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={props.data[index].setoptans == null ? () => option(props.data[index].op4, props.data[index].ans, "D") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        D: {props.data[index].op4}
-                                    </div>
-
-                                }
-
-                                {props.data[index].op5 &&
-
-                                    <div
-                                        style={props.data[index].setoptans == "E" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "E" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={props.data[index].setoptans == null ? () => option(props.data[index].op5, props.data[index].ans, "E") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        E: {props.data[index].op5}
-                                    </div>
-
-                                }
-
+                                )}
                             </div>
+                        </div>
 
-                            {props.data[index].reason && props.data[index].setoptans != null &&
-                                <>
-                                    <div className="quiz-lay-2 mt-4">
-                                        <div className="la">
-                                            <button onClick={toggleExplanation} className="btn btn-cus btn-md">Explanation <i className="fa fa-info-circle" /></button>
+                        {!shuuflephase ? (
+                            <>
+                                <h3 className="mt-4 fs-20">
+                                    {props.data[index].ques}
+                                </h3>
+
+                                <div className="row">
+
+                                    {props.data[index].op1 &&
+
+                                        <div
+                                            style={props.data[index].setoptans == "A" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "A" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={props.data[index].setoptans == null ? () => option(props.data[index].op1, props.data[index].ans, "A") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            A: {props.data[index].op1}
                                         </div>
-                                    </div>
-                                    {showExplanation && <p>{props.data[index].reason}</p>}
-                                </>
-                            }
-                            <div className="quiz-lay-2 mt-4">
-                                <div>
-                                    <button onClick={() => props.data[index].setoptans == null ? skip() : undefined} className="btn btn-primary btn-md">Skip ({skiparr.length})</button>
-                                </div>
-                                <div className="la">
-                                    <button style={{ marginRight: '5px' }} onClick={handlePrevious} disabled={index === 0} className="btn btn-primary btn-md">Previous</button>
-                                    <button onClick={handleNext} disabled={index === props.data.length - 1 && skiparr.length == 0} className="btn btn-primary btn-md">Next</button>
-                                </div>
-                            </div>
-                        </>
-                    ) : (
 
-                        <>
-                            <h3 className="mt-4 fs-20">
-                                {skiparr[indexskip].ques}
-                            </h3>
+                                    }
 
-                            <div className="row">
+                                    {props.data[index].op2 &&
 
-                                {skiparr[indexskip].op1 &&
-
-                                    <div
-                                        style={skiparr[indexskip].setoptans == "A" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "A" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op1, skiparr[indexskip].ans, "A") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        A: {skiparr[indexskip].op1}
-                                    </div>
-
-                                }
-
-                                {skiparr[indexskip].op2 &&
-
-                                    <div
-                                        style={skiparr[indexskip].setoptans == "B" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "B" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op2, skiparr[indexskip].ans, "B") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        B: {skiparr[indexskip].op2}
-                                    </div>
-
-                                }
-
-                                {skiparr[indexskip].op3 &&
-
-                                    <div
-                                        style={skiparr[indexskip].setoptans == "C" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "C" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op3, skiparr[indexskip].ans, "C") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        C: {skiparr[indexskip].op3}
-                                    </div>
-
-                                }
-
-                                {skiparr[indexskip].op4 &&
-
-                                    <div
-                                        style={skiparr[indexskip].setoptans == "D" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "D" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op4, skiparr[indexskip].ans, "D") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        D: {skiparr[indexskip].op4}
-                                    </div>
-
-                                }
-
-                                {skiparr[indexskip].op5 &&
-
-                                    <div
-                                        style={skiparr[indexskip].setoptans == "E" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "E" ? { backgroundColor: 'red', color: 'white' } : {})}
-                                        onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op5, skiparr[indexskip].ans, "E") : undefined}
-                                        className="col-lg-6 col-md-12 mcq-opt">
-                                        E: {skiparr[indexskip].op5}
-                                    </div>
-
-                                }
-
-                            </div>
-
-                            {skiparr[indexskip].reason && skiparr[indexskip].setoptans &&
-                                <>
-                                    <div className="quiz-lay-2 mt-4">
-                                        <div className="la">
-                                            <button onClick={toggleExplanation} className="btn btn-cus btn-md">Explanation <i className="fa fa-info-circle" /></button>
+                                        <div
+                                            style={props.data[index].setoptans == "B" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "B" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={props.data[index].setoptans == null ? () => option(props.data[index].op2, props.data[index].ans, "B") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            B: {props.data[index].op2}
                                         </div>
+
+                                    }
+
+                                    {props.data[index].op3 &&
+
+                                        <div
+                                            style={props.data[index].setoptans == "C" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "C" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={props.data[index].setoptans == null ? () => option(props.data[index].op3, props.data[index].ans, "C") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            C: {props.data[index].op3}
+                                        </div>
+
+                                    }
+
+                                    {props.data[index].op4 &&
+
+                                        <div
+                                            style={props.data[index].setoptans == "D" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "D" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={props.data[index].setoptans == null ? () => option(props.data[index].op4, props.data[index].ans, "D") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            D: {props.data[index].op4}
+                                        </div>
+
+                                    }
+
+                                    {props.data[index].op5 &&
+
+                                        <div
+                                            style={props.data[index].setoptans == "E" ? { backgroundColor: 'green', color: 'white' } : (props.data[index].sel_ans == "E" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={props.data[index].setoptans == null ? () => option(props.data[index].op5, props.data[index].ans, "E") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            E: {props.data[index].op5}
+                                        </div>
+
+                                    }
+
+                                </div>
+
+                                {props.data[index].reason && props.data[index].setoptans != null &&
+                                    <>
+                                        <div className="quiz-lay-2 mt-4">
+                                            <div className="la">
+                                                <button onClick={toggleExplanation} className="btn btn-cus btn-md">Explanation <i className="fa fa-info-circle" /></button>
+                                            </div>
+                                        </div>
+                                        {showExplanation && <p>{props.data[index].reason}</p>}
+                                    </>
+                                }
+                                <div className="quiz-lay-2 mt-4">
+                                    <div>
+                                        <button onClick={() => props.data[index].setoptans == null ? skip() : undefined} className="btn btn-primary btn-md">Skip ({skiparr.length})</button>
                                     </div>
-                                    {showExplanation && <p>{skiparr[indexskip].reason}</p>}
-                                </>
-                            }
-                            <div className="quiz-lay-2 mt-4">
-                                {/* <div>
+                                    <div className="la">
+                                        <button style={{ marginRight: '5px' }} onClick={handlePrevious} disabled={index === 0} className="btn btn-primary btn-md">Previous</button>
+                                        <button onClick={handleNext} disabled={index === props.data.length - 1 && skiparr.length == 0} className="btn btn-primary btn-md">Next</button>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+
+                            <>
+                                <h3 className="mt-4 fs-20">
+                                    {skiparr[indexskip].ques}
+                                </h3>
+
+                                <div className="row">
+
+                                    {skiparr[indexskip].op1 &&
+
+                                        <div
+                                            style={skiparr[indexskip].setoptans == "A" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "A" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op1, skiparr[indexskip].ans, "A") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            A: {skiparr[indexskip].op1}
+                                        </div>
+
+                                    }
+
+                                    {skiparr[indexskip].op2 &&
+
+                                        <div
+                                            style={skiparr[indexskip].setoptans == "B" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "B" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op2, skiparr[indexskip].ans, "B") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            B: {skiparr[indexskip].op2}
+                                        </div>
+
+                                    }
+
+                                    {skiparr[indexskip].op3 &&
+
+                                        <div
+                                            style={skiparr[indexskip].setoptans == "C" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "C" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op3, skiparr[indexskip].ans, "C") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            C: {skiparr[indexskip].op3}
+                                        </div>
+
+                                    }
+
+                                    {skiparr[indexskip].op4 &&
+
+                                        <div
+                                            style={skiparr[indexskip].setoptans == "D" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "D" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op4, skiparr[indexskip].ans, "D") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            D: {skiparr[indexskip].op4}
+                                        </div>
+
+                                    }
+
+                                    {skiparr[indexskip].op5 &&
+
+                                        <div
+                                            style={skiparr[indexskip].setoptans == "E" ? { backgroundColor: 'green', color: 'white' } : (skiparr[indexskip].sel_ans == "E" ? { backgroundColor: 'red', color: 'white' } : {})}
+                                            onClick={skiparr[indexskip].setoptans === "" ? () => option(skiparr[indexskip].op5, skiparr[indexskip].ans, "E") : undefined}
+                                            className="col-lg-6 col-md-12 mcq-opt">
+                                            E: {skiparr[indexskip].op5}
+                                        </div>
+
+                                    }
+
+                                </div>
+
+                                {skiparr[indexskip].reason && skiparr[indexskip].setoptans &&
+                                    <>
+                                        <div className="quiz-lay-2 mt-4">
+                                            <div className="la">
+                                                <button onClick={toggleExplanation} className="btn btn-cus btn-md">Explanation <i className="fa fa-info-circle" /></button>
+                                            </div>
+                                        </div>
+                                        {showExplanation && <p>{skiparr[indexskip].reason}</p>}
+                                    </>
+                                }
+                                <div className="quiz-lay-2 mt-4">
+                                    {/* <div>
                                     <button onClick={() => skiparr[indexskip].setoptans ==="" ? skip() : undefined} className="btn btn-primary btn-md">Skip ({skiparr.length})</button>
                                 </div> */}
-                                <div className="la">
-                                    {/* <button style={{ marginRight: '5px' }} onClick={handlePrevious} disabled={indexskip === 0} className="btn btn-primary btn-md">Previous</button> */}
-                                    <button onClick={handleNext} disabled={indexskip === skiparr.length - 1} className="btn btn-primary btn-md">Next</button>
+                                    <div className="la">
+                                        {/* <button style={{ marginRight: '5px' }} onClick={handlePrevious} disabled={indexskip === 0} className="btn btn-primary btn-md">Previous</button> */}
+                                        <button onClick={handleNext} disabled={indexskip === skiparr.length - 1} className="btn btn-primary btn-md">Next</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </>
-
-                    )}
+                            </>
+                        )}
+                    </div>
+                    <div className="col-lg-1 col-md-1 ps-0" />
                 </div>
-                <div className="col-lg-1 col-md-1 ps-0" />
-            </div>
             )}
+
+
 
         </>
     )

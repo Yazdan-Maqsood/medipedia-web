@@ -7,13 +7,10 @@ import Test from "./Test";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
-export const metadata = {
-  title: "Medipedia Guide",
-};
 
 export default async function Page({ params }) {
-  const datas = await getServerSession (authOptions);
-  if (params.multiple.length==2) {
+  const datas = await getServerSession(authOptions);
+  if (params.multiple.length == 2) {
     const data = await getData(params.multiple[1])
     return (
       <>
@@ -32,7 +29,7 @@ export default async function Page({ params }) {
       </>
     );
   } else {
-    const data = await getData2(params.multiple[2],datas.user.id)
+    const data = await getData2(params.multiple[2], datas.user.id)
     return (
       <>
         <section className="courses-category-area ptb-50">
@@ -76,7 +73,7 @@ async function getData(params) {
 }
 
 
-async function getData2(params,user_id) {
+async function getData2(params, user_id) {
   const formData = new FormData();
   formData.append("slug", params);
   formData.append("user_id", user_id);
@@ -92,3 +89,24 @@ async function getData2(params,user_id) {
 
   return res.json()
 }
+
+
+
+// export async function generateMetadata({ params }) {
+
+//   const datas = await getServerSession(authOptions);
+//   if (params.multiple.length == 2) {
+//     const data = await getData(params.multiple[1])
+//     return {
+//       title: "Paper - " + data.heading,
+  
+//     }
+//   } else {
+//     const data = await getData2(params.multiple[2], datas.user.id)
+//     return {
+//       title: "Test - " + data.heading,
+  
+//     }
+
+//   }
+// }

@@ -6,7 +6,6 @@ import { SessionProvider } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 
 
-
 export default function RootLayout({ children, session }) {
   return (
     <html lang="en">

@@ -40,7 +40,7 @@ export default function Login() {
                     password: password,
                     redirect: false,
                 });
-                            // console.log("okkkkkkkkkkk"+signInResponse);
+                // console.log("okkkkkkkkkkk"+signInResponse);
 
                 if (!signInResponse.error) {
                     toast.success("You have login successfully");
@@ -48,7 +48,7 @@ export default function Login() {
                 } else {
                     toast.error("Invalid email or password");
                 }
-               
+
             } catch (error) {
                 setError("Something went wrong");
                 console.error(error); // Log the error for debugging
@@ -93,13 +93,13 @@ export default function Login() {
                     Password
                 </label>
                 {passwordError && <div className="error text-danger">{passwordError}</div>}
-                <span style={{ position:'absolute',right:'29px' }} onClick={togglePasswordVisibility} className={`icofont-eye${showPassword ? '' : '-alt'} field-icon toggle-password`} />
+                <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} className={`icofont-eye${showPassword ? '' : '-alt'} field-icon toggle-password`} />
             </div>
             <div className="submit-btn">
                 <button type="submit" className="main-btn border-0" disabled={loading}>
                     <span>
                         {loading ? (
-                            <div className="spinner-border text-dark" role="status">
+                            <div className="spinner-border" role="status">
                                 <span className="sr-only">Loading...</span>
                             </div>
 

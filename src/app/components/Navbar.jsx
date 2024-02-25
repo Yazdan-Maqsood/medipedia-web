@@ -29,7 +29,7 @@ export default function Navbar() {
 
         return (
             <nav className="navbar navbar-section navbar-expand-lg sticky">
-                <div class="d-flex justify-content-center " style={{marginLeft:'10px'}} >
+                <div class="d-flex justify-content-center " style={{ marginLeft: '10px' }} >
                     <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
@@ -89,13 +89,38 @@ export default function Navbar() {
                                 Home
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link href="/feedback" className="nav-link autoo">
-                                Feedback
-                            </Link>
-                        </li>
+                        {!session && (
+                            <>
+                                <li className="nav-item">
+                                    <Link href="/about-us" className="nav-link autoo">
+                                        About us
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link href="/contact-us" className="nav-link autoo">
+                                        Contact us
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link href="/privacy-policy" className="nav-link autoo">
+                                        Privacy Policy
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link href="/dmca-policy" className="nav-link autoo">
+                                        DMCA Policy
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+
                         {session && (
                             <>
+                                <li className="nav-item">
+                                    <Link href="/feedback" className="nav-link autoo">
+                                        Feedback
+                                    </Link>
+                                </li>
                                 <li className="nav-item ali">
                                     <Link href="/guide" className="nav-link autoo ">
                                         Medipedia Guide

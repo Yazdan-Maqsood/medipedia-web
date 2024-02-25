@@ -157,7 +157,7 @@ export default function Form() {
             {/* Submit Button */}
             <div className="submit-btn">
                 <button type="submit" className="main-btn border-0" disabled={loading}>
-                    <span>{loading ? <div className="spinner-border text-dark" role="status"><span className="sr-only">Loading...</span></div> : 'Submit'}</span>
+                    <span>{loading ? <div className="spinner-border" role="status"><span className="sr-only">Loading...</span></div> : 'Submit'}</span>
                 </button>
             </div>
             {/* Error Message */}

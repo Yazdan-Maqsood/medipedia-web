@@ -5517,9 +5517,9 @@ textarea.form-control {
   margin-bottom: 40px;
 }
 
-.react-responsive-modal-modal {
-  width: 40% !important;
-}
+/* .react-responsive-modal-modal {
+  width: 52% !important;
+} */
 
 .ProfileSideNav{
     color: white !important;
@@ -5567,4 +5567,45 @@ textarea.form-control {
   50% {
     opacity: .5;
   }
+}
+
+
+.search-results-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.search-results {
+  display: grid;
+  gap: 20px;
+}
+
+.search-result {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.result-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.result-title:hover {
+  text-decoration: underline;
+}
+
+.result-snippet {
+  font-size: 16px;
+  color: #333;
 }
