@@ -4,8 +4,8 @@ import { apiUrl } from '../config/constant';
 import Data from './Data';
 
 export const metadata = {
-    title: "Book Prices",
-};
+    title: 'Book Prices - Medipedia',
+}
 
 export default async function page() {
     const data = await getData()

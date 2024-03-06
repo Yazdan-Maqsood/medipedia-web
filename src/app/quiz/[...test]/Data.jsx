@@ -375,41 +375,49 @@ export default function page(props) {
                 </div>
             ) : (
                 <div className="col-lg-10 col-md-10 ps-0">
-                    <div className="sign-up-form">
+                    <div style={{ paddingTop: '21px', paddingBottom: '21px' }} className="sign-up-form">
                         <div className="timr">
                             <div>{duration.hours.toString().padStart(2, '0')}</div>
                             <div>{duration.minutes.toString().padStart(2, '0')}</div>
                             <div>{duration.seconds.toString().padStart(2, '0')}</div>
                         </div>
-                        <div className="quiz-lay-2 mt-4">
+                        <div style={{ marginTop: '-20px' }} className="quiz-lay-2">
                             <div>Marks : {marks}</div>
                             <div>Q : {total}/{totaldata}</div>
                         </div>
-                        {!shuuflephase ? (
 
-                            props.data[index].setoptans == null ? (
-                                <></>
-                            ) : (
-                                <GoogleGpt Ques={props.data[index].ques}   ></GoogleGpt>
-
-                            )
-
-
-                        ) : (
-                            skiparr[indexskip].setoptans === "" ? (
-                                <></>
-                            ) : (
-                                <GoogleGpt Ques={skiparr[indexskip].ques}   ></GoogleGpt>
-                            )
-
-                        )}
 
 
                         <div className="quiz-lay-thr mt-4">
                             <div>
-                                <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">
-                                    Save <i className="fa fa-save" />
-                                </button>
+                                {!shuuflephase ? (
+
+                                    props.data[index].setoptans == null ? (
+                                        <></>
+                                    ) : (
+                                        <GoogleGpt Ques={props.data[index].ques} ></GoogleGpt>
+
+                                    )
+
+
+                                ) : (
+                                    skiparr[indexskip].setoptans === "" ? (
+                                        <></>
+                                    ) : (
+                                        <GoogleGpt Ques={skiparr[indexskip].ques}  ></GoogleGpt>
+                                    )
+
+                                )}
+
+                            </div>
+                            <div className='pdd-10' >
+                                {props.data[0].setoptans != null ? (
+                                    <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">
+                                        Save <i className="fa fa-save" />
+                                    </button>
+                                ) : (
+                                    <></>
+                                )}
                                 <button style={{ marginRight: '5px' }} onClick={reset} className="btn btn-cus btn-md">
                                     Reset <i className="fa fa-refresh" />
                                 </button>
@@ -497,15 +505,21 @@ export default function page(props) {
                                         {showExplanation && <p>{props.data[index].reason}</p>}
                                     </>
                                 }
+
+
+
                                 <div className="quiz-lay-2 mt-4">
+
                                     <div>
                                         <button onClick={() => props.data[index].setoptans == null ? skip() : undefined} className="btn btn-primary btn-md">Skip ({skiparr.length})</button>
                                     </div>
+
                                     <div className="la">
                                         <button style={{ marginRight: '5px' }} onClick={handlePrevious} disabled={index === 0} className="btn btn-primary btn-md">Previous</button>
                                         <button onClick={handleNext} disabled={index === props.data.length - 1 && skiparr.length == 0} className="btn btn-primary btn-md">Next</button>
                                     </div>
                                 </div>
+
                             </>
                         ) : (
 

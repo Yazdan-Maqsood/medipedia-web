@@ -4,7 +4,7 @@ import ProfileSideNav from '../components/ProfileSideNav'
 import Form from './Form'
 
 export const metadata = {
-  title: "Change Profile Name",
+  title: "Change Profile Name - Medipedia",
 };
 
 export default function page() {

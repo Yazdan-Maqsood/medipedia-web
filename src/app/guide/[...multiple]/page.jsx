@@ -92,21 +92,21 @@ async function getData2(params, user_id) {
 
 
 
-// export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }) {
 
-//   const datas = await getServerSession(authOptions);
-//   if (params.multiple.length == 2) {
-//     const data = await getData(params.multiple[1])
-//     return {
-//       title: "Paper - " + data.heading,
+  const datas = await getServerSession(authOptions);
+  if (params.multiple.length == 2) {
+    const data = await getData(params.multiple[1])
+    return {
+      title: "Paper - " + data.heading,
   
-//     }
-//   } else {
-//     const data = await getData2(params.multiple[2], datas.user.id)
-//     return {
-//       title: "Test - " + data.heading,
+    }
+  } else {
+    const data = await getData2(params.multiple[2], datas.user.id)
+    return {
+      title: "Test - " + data.heading,
   
-//     }
+    }
 
-//   }
-// }
+  }
+}

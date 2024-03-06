@@ -404,45 +404,47 @@ export default function Saved(props) {
                     </div>
                 </div>
             ) : (
-
                 <div className="col-lg-10 col-md-10 ps-0">
-                    <div className="sign-up-form">
+                    <div style={{ paddingTop: '21px', paddingBottom: '21px' }} className="sign-up-form">
                         <div className="timr">
                             <div>{duration.hours.toString().padStart(2, '0')}</div>
                             <div>{duration.minutes.toString().padStart(2, '0')}</div>
                             <div>{duration.seconds.toString().padStart(2, '0')}</div>
                         </div>
-                        <div className="quiz-lay-2 mt-4">
+                        <div style={{ marginTop: '-20px' }} className="quiz-lay-2">
                             <div>Marks : {marks}</div>
                             <div>Q : {total}/{totaldata}</div>
                         </div>
-                        {!shuuflephase ? (
-                            props.data[index].setoptans == null ? (
-                                <></>
-                            ) : (
-                                <GoogleGpt Ques={props.data[index].ques}   ></GoogleGpt>
-                            )
-                        ) : (
-                            skiparr[indexskip].setoptans == null ? (
-                                <></>
-                            ) : (
-                                <GoogleGpt Ques={skiparr[indexskip].ques}   ></GoogleGpt>
-                            )
-                        )}
+
                         <div className="quiz-lay-thr mt-4">
                             <div>
+                                {!shuuflephase ? (
+                                    props.data[index].setoptans == null ? (
+                                        <></>
+                                    ) : (
+                                        <GoogleGpt Ques={props.data[index].ques}    ></GoogleGpt>
+                                    )
+                                ) : (
+                                    skiparr[indexskip].setoptans == null ? (
+                                        <></>
+                                    ) : (
+                                        <GoogleGpt Ques={skiparr[indexskip].ques}   ></GoogleGpt>
+                                    )
+                                )}
+                            </div>
+                            <div className='pdd-10'>
                                 <button style={{ marginRight: '5px' }} onClick={save} className="btn btn-cus btn-md">
                                     Save  <i className="fa fa-save" />
                                 </button>
                                 <button style={{ marginRight: '5px' }} onClick={reset} className="btn btn-cus btn-md">
                                     Reset <i className="fa fa-refresh" />
                                 </button>
-                                {/* {!shuuflephase ? (
+                                {!shuuflephase ? (
                                     <Reprt test_id={props.testId} question_id={props.data[index].id} ></Reprt>
                                 ) : (
                                     <Reprt test_id={props.testId} question_id={skiparr[indexskip].id} ></Reprt>
 
-                                )} */}
+                                )}
                             </div>
                         </div>
 

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import Data from './Data'
 
 export const metadata = {
-    title: "Feedback",
-};
+    title: "Feedback - Medipedia",
+  };
 
 export default function page() {
     return (

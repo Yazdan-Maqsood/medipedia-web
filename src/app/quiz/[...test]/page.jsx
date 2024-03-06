@@ -9,7 +9,6 @@ import { getServerSession } from "next-auth/next";
 export default async function page({ params }) {
     const datas = await getServerSession(authOptions);
     const data = await getData(params.test[3], datas.user.id)
-    console.log(data.quiz_save)
     return (
         <section className="sign-up-section ptb-50">
             <h1 class="text-center">{data.type == "new" ? (<></>) : (<>Saved: </>)}{data.heading}  <Link href={`/search/${params.test[3]}`} ><i style={{marginLeft:'55px',color:'#0c7399'}} class="fa fa-search"></i></Link></h1>
@@ -48,3 +47,15 @@ async function getData(params, user_id) {
 
     return res.json()
 }
+
+
+export async function generateMetadata({ params }) {
+  
+    const datas = await getServerSession(authOptions);
+    const data = await getData(params.test[3], datas.user.id)
+  
+   
+    return {
+      title: "Quiz - " + data.heading,
+    }
+  }

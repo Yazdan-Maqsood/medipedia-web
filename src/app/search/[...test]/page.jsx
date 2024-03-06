@@ -3,6 +3,7 @@ import { apiUrl } from '../../config/constant';
 import Data from './Data';
 import Search from './Search';
 
+
 export default async function page({ params }) {
   if (params.test[1]) {
     var search = params.test[1];
@@ -16,11 +17,15 @@ export default async function page({ params }) {
     <div className="terms-conditions-section pt-50">
       <h1 className="text-center">{data.heading}</h1>
       <div className="container">
-        <Search></Search>
+        <Search search={search}></Search>
         <div className="row">
           <div className="col-lg-12">
             <div className="pt-50" id="terms">
+              {data.data.length!=0 ? (
                 <Data data={data.data} ></Data>
+              ) : (
+                <div>No Result found</div>
+              )}
             </div>
           </div>
         </div>
@@ -46,3 +51,17 @@ async function getData(params, search) {
 
   return res.json()
 }
+
+
+export async function generateMetadata({ params }) {
+  if (params.test[1]) {
+    var search = params.test[1];
+  } else {
+    var search = "";
+  }
+
+  return {
+    title: "Search  " + search,
+  }
+}
+

@@ -1,50 +1,165 @@
 'use client'
 import React, { useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
-const jsonData = [
-  {
-    "id": 1,
-    "question": "What is Next.js?",
-    "answer": "Next.js is a React framework for building server-side rendered and statically generated web applications."
-  },
-  {
-    "id": 2,
-    "question": "What is React?",
-    "answer": "React is a JavaScript library for building user interfaces."
-  },
-  {
-    "id": 3,
-    "question": "What is Node.js?",
-    "answer": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine."
-  }
-];
 
-export default function MyComponent() {
-  const [index, setIndex] = useState(0);
-
-  const handleNext = () => {
-    if (index < jsonData.length - 1) {
-      setIndex(index + 1);
-    }
+function App() {
+  const [defaultImage, setDefaultImage] = useState({});
+  const settings = {
+    centerMode: true,
+    centerPadding: '60px',
+    slidesToShow: 2,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
-  const handlePrevious = () => {
-    if (index > 0) {
-      setIndex(index - 1);
-    }
+  const handleErrorImage = (data) => {
+    setDefaultImage((prev) => ({
+      ...prev,
+      [data.target.alt]: data.target.alt,
+      linkDefault: imgGirl,
+    }));
   };
 
   return (
-    <div>
-      <h1>JSON Data:</h1>
-      <div>
-        <h2>{jsonData[index].question}</h2>
-        <p>{jsonData[index].answer}</p>
-      </div>
-      <div>
-        <button onClick={handlePrevious} disabled={index === 0}>Previous</button>
-        <button onClick={handleNext} disabled={index === jsonData.length - 1}>Next</button>
-      </div>
+    <div className='achieved-section' style={{ overflow: 'hidden' }} >
+      <Slider {...settings}>
+
+
+        
+          <div className="students-expressed-single-item hover-style">
+            <div className="inner-border">
+              <div className="d-sm-flex d-md-block d-lg-flex">
+                <div className="flex-shrink-0 mb-3 mb-sm-0 mb-md-3 mb-lg-0">
+                  <img src="/assets/images/user/user-8.jpg" alt="user-8" />
+                </div>
+                <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
+                  <h3>They Provide Also Ethically!</h3>
+                  <p>
+                    During this era, online learning unexpectedly occur increased. The
+                    single person relay on the polimar internet to learning to happend !
+                  </p>
+                  <h4>Xwad Daud</h4>
+                  <span>e-Tutor Moral Online, Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+     
+
+          <div className="students-expressed-single-item hover-style">
+            <div className="inner-border">
+              <div className="d-sm-flex d-md-block d-lg-flex">
+                <div className="flex-shrink-0 mb-3 mb-sm-0 mb-md-3 mb-lg-0">
+                  <img src="/assets/images/user/user-8.jpg" alt="user-8" />
+                </div>
+                <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
+                  <h3>They Provide Also Ethically!</h3>
+                  <p>
+                    During this era, online learning unexpectedly occur increased. The
+                    single person relay on the polimar internet to learning to happend !
+                  </p>
+                  <h4>Xwad Daud</h4>
+                  <span>e-Tutor Moral Online, Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+     
+
+
+          <div className="students-expressed-single-item hover-style">
+            <div className="inner-border">
+              <div className="d-sm-flex d-md-block d-lg-flex">
+                <div className="flex-shrink-0 mb-3 mb-sm-0 mb-md-3 mb-lg-0">
+                  <img src="/assets/images/user/user-8.jpg" alt="user-8" />
+                </div>
+                <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
+                  <h3>They Provide Also Ethically!</h3>
+                  <p>
+                    During this era, online learning unexpectedly occur increased. The
+                    single person relay on the polimar internet to learning to happend !
+                  </p>
+                  <h4>Xwad Daud</h4>
+                  <span>e-Tutor Moral Online, Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+     
+
+
+          <div className="students-expressed-single-item hover-style">
+            <div className="inner-border">
+              <div className="d-sm-flex d-md-block d-lg-flex">
+                <div className="flex-shrink-0 mb-3 mb-sm-0 mb-md-3 mb-lg-0">
+                  <img src="/assets/images/user/user-8.jpg" alt="user-8" />
+                </div>
+                <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
+                  <h3>They Provide Also Ethically!</h3>
+                  <p>
+                    During this era, online learning unexpectedly occur increased. The
+                    single person relay on the polimar internet to learning to happend !
+                  </p>
+                  <h4>Xwad Daud</h4>
+                  <span>e-Tutor Moral Online, Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+     
+
+          <div className="students-expressed-single-item hover-style">
+            <div className="inner-border">
+              <div className="d-sm-flex d-md-block d-lg-flex">
+                <div className="flex-shrink-0 mb-3 mb-sm-0 mb-md-3 mb-lg-0">
+                  <img src="/assets/images/user/user-8.jpg" alt="user-8" />
+                </div>
+                <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
+                  <h3>They Provide Also Ethically!</h3>
+                  <p>
+                    During this era, online learning unexpectedly occur increased. The
+                    single person relay on the polimar internet to learning to happend !
+                  </p>
+                  <h4>Xwad Daud</h4>
+                  <span>e-Tutor Moral Online, Indonesia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+     
+
+
+
+      </Slider>
     </div>
   );
 }
+
+export default App;

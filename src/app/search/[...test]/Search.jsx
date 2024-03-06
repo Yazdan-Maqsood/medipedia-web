@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-function UpdateUrlComponent() {
+function UpdateUrlComponent(props) {
     const router = useRouter();
     const pathname = usePathname()
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(props.search);
 
     const updateUrl = () => {
         const newSearch = encodeURIComponent(inputValue);

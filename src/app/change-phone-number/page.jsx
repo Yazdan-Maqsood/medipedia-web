@@ -5,7 +5,7 @@ import Form from './Form'
 
 
 export const metadata = {
-    title: "Change Phone Number",
+    title: "Change Phone Number - Medipedia",
 };
 
 export default function page() {

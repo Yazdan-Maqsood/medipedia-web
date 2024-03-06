@@ -2,6 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 import Form from './Form'
 
+export const metadata = {
+    title: "Forgot Password - Medipedia",
+  };
+
 export default function page() {
     return (
         <section className="sign-up-section ptb-50">

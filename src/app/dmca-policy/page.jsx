@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const metadata = {
+    title: "DMCA Policy - Medipedia",
+};
+
 export default function page() {
     return (
         <section className="sign-up-section ptb-50">

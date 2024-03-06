@@ -4,9 +4,8 @@ import ProfileSideNav from '../components/ProfileSideNav'
 import Username from '../components/Username';
 
 export const metadata = {
-    title: "Dashboard",
+    title: "Dashboard - Medipedia",
 };
-
 
 export default function page() {
     return (

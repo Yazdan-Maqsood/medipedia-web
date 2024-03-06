@@ -69,13 +69,12 @@ async function getData(params, user_id) {
 }
 
 
-// export async function generateMetadata({ params}) {
+export async function generateMetadata({ params }) {
  
-//   const datas = await getServerSession(authOptions);
-//   const data = await getData(params.book, datas.user.id)
-
-//   return {
-//     title: "Book - " + data.heading,
-    
-//   }
-// }
+  const datas = await getServerSession(authOptions);
+  const data = await getData(params.book, datas.user.id)
+ 
+  return {
+    title: "Book - " + data.heading,
+  }
+}

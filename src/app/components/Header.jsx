@@ -1,10 +1,31 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Username from './Username'
+import { apiUrl, profiledata } from '../config/constant';
 import { useSession } from "next-auth/react";
 
 export default function Header() {
     const { data: session, status } = useSession();
+    const [name, setname] = useState("");
+    const [load, setload] = useState(false);
+
+    useEffect(() => {
+        if (session && session.user) {
+            setload(true)
+            // Fetch profile data when the component mounts
+            const fetchData = async () => {
+                try {
+                    const data = await profiledata(session.user.id);
+                    setload(false)
+                    setname(data.user_name); // Set the email obtained from profile data into state
+                } catch (error) {
+                    console.error('Error fetching profile data:', error);
+                }
+            };
+            fetchData();
+        }
+    }, [session]);
+
     return (
         <section
             className="banner-section overflow-hidden bg-img"
@@ -18,10 +39,19 @@ export default function Header() {
                                 <span>Online!</span>Global learning platform
                             </span>
                             {session ? (
-                                <h1>
-                                    <span><Username></Username></span>
-                                    <span style={{ fontSize: 20 }}>, Good Evening</span>
-                                </h1>
+                                <>
+                                    {load ? (
+                                        <h1>
+                                            <span></span>
+                                            <span style={{ fontSize: 20 }}>Loading..</span>
+                                        </h1>
+                                    ) : (
+                                        <h1>
+                                            <span>{name}</span>
+                                            <span style={{ fontSize: 20 }}>, Good Evening</span>
+                                        </h1>
+                                    )}
+                                </>
                             ) : (
                                 <h1>
                                     <span>Medical Guide</span>
@@ -29,39 +59,8 @@ export default function Header() {
                             )}
 
                             <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy
-                                text ever since the 1500s, when an unknown printer took a galley
-                                of type and scrambled it to make a type specimen book.
+                                Medipedia is an innovative online platform designed exclusively for medical students, providing a comprehensive repository of Multiple Choice Questions (MCQs) to enhance learning and preparation. Tailored to meet the unique needs of medical education, Medipedia offers a vast array of meticulously curated MCQs covering diverse medical specialties, enabling students to test their knowledge, assess their understanding, and reinforce key concepts. With a user-friendly interface and extensive question bank, Medipedia serves as an invaluable resource for aspiring healthcare professionals, facilitating effective exam preparation and fostering continuous learning in the ever-evolving field of medicine.
                             </p>
-                            <form className="search-form position-relative z-1">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search for anything"
-                                />
-                                <button className="main-btn border-0 position-absolute top-50 end-0 translate-middle-y d-flex align-items-center">
-                                    <img src="/assets/images/icon/search.svg" alt="search" />
-                                    <span className="ms-2 d-none d-sm-block">Search</span>
-                                </button>
-                            </form>
-                            {/* <ul className="ps-0 mb-0 list-unstyled">
-                                <li>
-                                    <span>Popular :</span>
-                                </li>
-                                <li>
-                                    <a href="courses.html">MARKETING</a>
-                                </li>
-                                <li>
-                                    <a href="courses.html">EDUCATION</a>
-                                </li>
-                                <li>
-                                    <a href="courses.html">TECH</a>
-                                </li>
-                                <li>
-                                    <a href="courses.html">SCIENCE</a>
-                                </li>
-                            </ul> */}
                         </div>
                     </div>
                     <div className="col-lg-6">

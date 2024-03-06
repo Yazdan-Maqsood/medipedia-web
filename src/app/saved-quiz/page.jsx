@@ -4,6 +4,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import Data from "./Data";
 
+export const metadata = {
+  title: "Saved Quiz - Medipedia",
+};
+
 
 export default async function page() {
   const datas = await getServerSession(authOptions);

@@ -39,3 +39,15 @@ async function getData(params) {
 
   return res.json()
 }
+
+
+
+export async function generateMetadata({ params }) {
+  
+  const data = await getData(params.test_id)
+
+ 
+  return {
+    title: "Hints - " + data.heading,
+  }
+}

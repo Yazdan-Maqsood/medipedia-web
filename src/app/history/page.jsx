@@ -5,6 +5,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 
+export const metadata = {
+    title: "History - Medipedia",
+  };
+
 export default async function page() {
     const datas = await getServerSession(authOptions);
     const data = await getData(datas.user.id)

@@ -11,25 +11,44 @@ export default function GoogleGpt(props) {
     const [google, setGoogle] = useState(false);
     const [frame, setframe] = useState(false);
     const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [framelink, setframelink] = useState('');
+
 
     const onGptModal = () => {
 
         fetchResponse()
 
     }
-    const onGoogleModal = () => {
-        setGoogle(true);
 
+
+
+    const onGoogleModal = () => {
+
+        fetchData();
+
+
+    }
+
+
+    function openFrames(link) {
+        setframe(true)
+        setframelink(link)
+        setGoogle(false);
     }
 
     const onCloseGpt = () => setGpt(false);
     const onCloseGoogle = () => setGoogle(false);
-
+    const onCloseframe = () => {
+        setframe(false)
+        setframelink('')
+        setGoogle(true);
+    }
     const fetchData = async () => {
         try {
+            setLoading(true)
             const apiKey = 'AIzaSyBL4c8q63-Tuq0f5JWgXVRZEkD0iIRX9H4';
             const searchEngineId = '74ef92dbf72f04cfd';
             const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(props.Ques)}`;
@@ -43,6 +62,7 @@ export default function GoogleGpt(props) {
                 setResults([]);
             }
             setLoading(false);
+            setGoogle(true);
         } catch (error) {
             console.error('Error fetching data:', error);
             setLoading(false);
@@ -51,7 +71,7 @@ export default function GoogleGpt(props) {
 
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
     }, []);
 
 
@@ -97,40 +117,46 @@ export default function GoogleGpt(props) {
 
     return (
         <>
-            <div style={{ float: 'left' }}>
-                <img onClick={onGptModal} data-bs-toggle="tooltip" title="Generate Answer with AI" style={{ width: '50px', cursor: 'pointer' }} src='/assets/images/chatgpt-logo.jpg' alt="ChatGPT Logo"></img>
-            </div>
-            <div style={{ float: 'left' }}>
-                <img onClick={onGoogleModal} data-bs-toggle="tooltip" title="Generate Answer with Google" style={{ width: '50px', cursor: 'pointer' }} src='/assets/images/google-logo.png' alt="Google Logo"></img>
-            </div>
-            {isLoading ? <div style={{ textAlign: "center" }}>Generating AI based answer......</div> : null}
-            <Modal open={gpt} onClose={onCloseGpt} center>
-                <div style={{ padding: '15px' }} >
-                    <br></br>
-                    {!isLoading ? (
-                        <div style={{ padding: '15px' }} >
-                            <b>AI Generated Answer:</b>
-                            <p style={{ textAlign: 'justify' }} >{response}</p>
-                        </div>
-                    ) : (
-                        <></>
-                    )}
+            <div style={{ display: 'flex', }} >
+                <div>
+                    <button onClick={onGoogleModal} style={{ marginRight: '5px' }} className="btn btn-cus btn-md">
+                        <img data-bs-toggle="tooltip" title="Generate Answer with Google" style={{ width: '23px', cursor: 'pointer' }} src='/assets/images/google-logo.png' alt="Google Logo"></img>  {loading ? "Searching..." : "Search"}
+                    </button>
                 </div>
-            </Modal>
-            <Modal open={google} onClose={onCloseGoogle} center>
-                <div style={{ padding: '20px' }} className="search-results">
-                    <b>Google base answer:</b>
-                    {results.map((item, index) => (
-                        <div key={index} className="search-result">
-                            <Link target='_blank' href={item.link} className="result-title">{item.title}</Link>
-                            <p className="result-snippet">{item.snippet}</p>
-                        </div>
-                    ))}
+                <div style={{ float: 'left' }}>
+                    <button onClick={onGptModal} style={{ marginRight: '5px' }} className="btn btn-cus btn-md">
+                        <img data-bs-toggle="tooltip" title="Generate Answer with AI" style={{ width: '23px', cursor: 'pointer' }} src='/assets/images/chatgpt-logo.png' alt="ChatGPT Logo"></img> {isLoading ? "Generating....." : "AI Explanation"}
+                    </button>
                 </div>
-            </Modal>
-            {/* <Modal open={frame} onClose={onCloseframe} center>
-                <iframe src="https://skillalfa.com/" height="800" width="100%" title="Iframe Example"></iframe>
-            </Modal> */}
+
+                <Modal open={gpt} onClose={onCloseGpt} center>
+                    <div style={{ padding: '15px' }} >
+                        <br></br>
+                        {!isLoading ? (
+                            <div style={{ padding: '15px' }} >
+                                <b>AI Generated Answer:</b>
+                                <p style={{ textAlign: 'justify' }} >{response}</p>
+                            </div>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
+                </Modal>
+                <Modal open={google} onClose={onCloseGoogle} center>
+                    <div style={{ padding: '20px' }} className="search-results">
+                        <b>Google base answer:</b>
+                        {results.map((item, index) => (
+                            <div key={index} className="search-result">
+                                <div style={{cursor:'pointer'}} onClick={() => openFrames(item.link)} className="result-title">{item.title}</div>
+                                <p className="result-snippet">{item.snippet}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Modal>
+                <Modal open={frame} onClose={onCloseframe} center>
+                    <iframe src={framelink} height="800" width="100%"></iframe>
+                </Modal>
+            </div>
         </>
     );
 }

@@ -5,13 +5,13 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 export const metadata = {
-  title: "Quiz Result",
+  title: "Quiz Result  - Medipedia",
 };
 
 
 export default async function page({ params }) {
-      const datas = await getServerSession(authOptions);
-      const data = await getData(params.test_id, datas.user.id)
+  const datas = await getServerSession(authOptions);
+  const data = await getData(params.test_id, datas.user.id)
   return (
     <>
       <Data data={data} ></Data>

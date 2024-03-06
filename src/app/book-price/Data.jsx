@@ -17,8 +17,10 @@ export default function Data(props) {
                                 <div className="flex-grow-1 ms-3">
                                     <span>
                                         {item.book_name}
-                                        <span  className="fees-a" style={{marginLeft:'5px'}}>
-                                            <b>{item.book_price}</b>
+                                        <span className="fees-a" style={{ marginLeft: '5px' }}>
+                                            <div style={{ float: 'right' }}>
+                                                <b>{item.book_price}</b>
+                                            </div>
                                         </span>
                                     </span>
                                 </div>

@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const metadata = {
+    title: "Contact us - Medipedia",
+};
+
 export default function page() {
     return (
         <section className="sign-up-section ptb-50">

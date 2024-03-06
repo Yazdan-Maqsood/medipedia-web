@@ -6,8 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 export const metadata = {
-    title: "Book Prices",
-};
+  title: 'Book Code - Medipedia',
+}
 
 export default async function page() {
     const datas = await getServerSession (authOptions);

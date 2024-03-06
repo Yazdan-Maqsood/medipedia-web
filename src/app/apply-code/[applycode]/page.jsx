@@ -3,6 +3,10 @@ import React from 'react'
 import {  SlugToTitle } from '../../config/constant';
 import  Form  from './Form';
 
+export const metadata = {
+    title: 'Apply Code - Medipedia',
+}
+
 export default function page({params}) {
     return (
         <section className="sign-up-section ptb-50">
