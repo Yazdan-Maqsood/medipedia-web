@@ -98,7 +98,10 @@ export default function Reprt(props) {
             <button onClick={() => modal()} className="btn btn-cus btn-md">
                 Report <i className="fas fa-exclamation-circle" />
             </button>
-            <Modal open={open} onClose={onCloseModal} center>
+            <Modal open={open} onClose={onCloseModal} center classNames={{
+                overlay: 'customOverlay',
+                modal: 'customModal',
+            }}>
                 <div style={{ background: 'transparent', boxShadow: 'none' }} className="sign-up-form">
                     <h2>Report Question</h2>
                     <p>Let us know what you find wrong in this Question</p>
@@ -114,7 +117,7 @@ export default function Reprt(props) {
                                 onChange={(e) => setfeedback(e.target.value)}
                             ></textarea>
                             <label htmlFor="feedback" className="form-label">
-                            Report
+                                Report
                             </label>
                             {feedbackError && <div className="error text-danger">{feedbackError}</div>}
                         </div>

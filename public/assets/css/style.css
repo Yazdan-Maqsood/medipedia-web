@@ -5326,3 +5326,10 @@ fieldset:disabled .btn {
   margin: 0 5px;
   cursor: pointer;
 }
+
+
+
+.customModal {
+  max-width: 50%;
+  width: 50%;
+}
