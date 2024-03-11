@@ -34,9 +34,9 @@ export async function middleware(req) {
     const isNonAuthRoute = nonAuthRoutesPatterns.some(route => `/${basePath}`.startsWith(route));
     const isAuthRoute = authenticatedRoutes.some(route => `/${basePath}`.startsWith(route));
 
-    if (session) {
+    if (session && isAuthRoute) {
         return NextResponse.redirect(new URL('/', req.nextUrl));
-    } else if (!session) {
+    } else if (!session && isNonAuthRoute) {
         return NextResponse.redirect(new URL('/login', req.nextUrl));
     }
 
