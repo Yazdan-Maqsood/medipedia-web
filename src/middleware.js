@@ -13,7 +13,7 @@ export async function middleware(request) {
       '/change-password',
       '/change-phone-number',
       '/change-profile-name',
-      '/guide/',
+      '/guide',
       '/hints',
       '/profile',
       '/quiz',
@@ -27,7 +27,7 @@ export async function middleware(request) {
 
   // Logic for determining if the pathname matches authenticated or non-authenticated routes
   const basePath = pathname.split('/')[1]; // Gets the first segment of the path
-  
+
   const isNonAuthRoute = nonAuthRoutesPatterns.some(route => `/${basePath}`.startsWith(route));
   const isAuthRoute = authenticatedRoutes.some(route => `/${basePath}`.startsWith(route));
 
