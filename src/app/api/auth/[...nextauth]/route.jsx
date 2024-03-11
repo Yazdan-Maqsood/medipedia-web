@@ -65,10 +65,10 @@ export const authOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  // session: {
-  //   // Add your custom session properties here
-  //   jwt: true, // Enable JSON Web Token (JWT) support for the session
-  // },
+  session: {
+    // Add your custom session properties here
+    jwt: true, // Enable JSON Web Token (JWT) support for the session
+  },
 
 
   callbacks: {
