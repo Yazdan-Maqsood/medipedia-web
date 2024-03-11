@@ -26,7 +26,7 @@ export async function middleware(req) {
         '/success',
     ];
     // Use nextUrl.pathname for Next.js versions that support it
-    const pathname = request.nextUrl.pathname;
+    const pathname = req.nextUrl.pathname;
 
     // Logic for determining if the pathname matches authenticated or non-authenticated routes
     const basePath = pathname.split('/')[1]; // Gets the first segment of the path
@@ -35,9 +35,9 @@ export async function middleware(req) {
     const isAuthRoute = authenticatedRoutes.some(route => `/${basePath}`.startsWith(route));
 
     if (session) {
-        return NextResponse.redirect(new URL('/', request.nextUrl));
+        return NextResponse.redirect(new URL('/', req.nextUrl));
     } else {
-        return NextResponse.redirect(new URL('/login', request.nextUrl));
+        return NextResponse.redirect(new URL('/login', req.nextUrl));
     }
 
     // Continue to the requested page if session exists or if it's a public path
