@@ -12,7 +12,7 @@ export async function middleware(req) {
     const nonAuthRoutesPatterns = [
         '/apply-code',
         '/book-code',
-        '/book-price',
+        // '/book-price',
         '/change-email',
         '/change-password',
         '/change-phone-number',
