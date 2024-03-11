@@ -13,7 +13,7 @@ export async function middleware(request) {
       '/change-password',
       '/change-phone-number',
       '/change-profile-name',
-      
+      '/about/:path*',
       '/hints',
       '/profile',
       '/quiz',
