@@ -31,11 +31,11 @@ export async function middleware(request) {
   const isNonAuthRoute = nonAuthRoutesPatterns.some(route => `/${basePath}`.startsWith(route));
   const isAuthRoute = authenticatedRoutes.some(route => `/${basePath}`.startsWith(route));
 
-  if (cookie && isAuthRoute) {
+  if (cookie  && isAuthRoute) {
       return NextResponse.redirect(new URL('/', request.nextUrl));
   } else if (!cookie && isNonAuthRoute) {
       return NextResponse.redirect(new URL('/login', request.nextUrl));
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
