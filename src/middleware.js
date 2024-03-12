@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 
 // This is your secret from NextAuth configuration. Ensure it matches.
-const secret = 123456780;
+const secret = 12345678;
 
 export async function middleware(req) {
     const session = await getToken({ req, secret });

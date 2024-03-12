@@ -64,7 +64,7 @@ export const authOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: 123456780,
   session: {
     // Add your custom session properties here
     jwt: true, // Enable JSON Web Token (JWT) support for the session
