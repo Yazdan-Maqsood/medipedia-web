@@ -50,9 +50,9 @@ export default function Navbar() {
 
         return (
             <nav className="navbar navbar-section navbar-expand-lg sticky">
-                <div class="d-flex justify-content-center " style={{ marginLeft: '10px' }} >
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
+                <div className="d-flex justify-content-center " style={{ marginLeft: '10px' }} >
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
                     </div>
                 </div>
             </nav>

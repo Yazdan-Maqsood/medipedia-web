@@ -49,18 +49,18 @@ export default function RootLayout({ children, session }) {
             easing="linear"
           />
           <Navbar></Navbar>
-          <div class="preloader">
-            <div class="content">
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
-              <div class="ball"></div>
+          <div className="preloader">
+            <div className="content">
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
+              <div className="ball"></div>
             </div>
           </div>
           {children}
