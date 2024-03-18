@@ -1,41 +1,25 @@
-import { NextResponse } from 'next/server';
+// This example assumes you're using the new Middleware (file-based routing) in Next.js 14.
 
-export async function middleware(request) {
-  //let cookie = request.cookies.get('next-auth.session-token');
-  let cookie = request.cookies.get('__Secure-next-auth.session-token');
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
 
-  const authenticatedRoutes = ['/login', '/register','/forgot-password'];
-  const nonAuthRoutesPatterns = [
-      '/apply-code',
-      '/book-code',
-      '/book-price',
-      '/change-email',
-      '/change-password',
-      '/change-phone-number',
-      '/change-profile-name',
-      '/guide',
-      '/hints',
-      '/profile',
-      '/quiz',
-      '/saved-quiz',
-      '/search',
-      '/success',
-  ];
+// This is your secret from NextAuth configuration. Ensure it matches.
+const secret = process.env.NEXTAUTH_SECRET;
 
-  // Use nextUrl.pathname for Next.js versions that support it
-  const pathname = request.nextUrl.pathname;
+export async function middleware(req) {
+    const session = await getToken({ req, secret });
+   
+    if (session) {
+        
+        return NextResponse.redirect(new URL('/forgot-password', request.nextUrl));
 
-  // Logic for determining if the pathname matches authenticated or non-authenticated routes
-  const basePath = pathname.split('/')[1]; // Gets the first segment of the path
+    }else{
+        
+        return NextResponse.redirect(new URL('/guide', request.nextUrl));
 
-  const isNonAuthRoute = nonAuthRoutesPatterns.some(route => `/${basePath}`.startsWith(route));
-  const isAuthRoute = authenticatedRoutes.some(route => `/${basePath}`.startsWith(route));
 
-  if (cookie && isAuthRoute) {
-      return NextResponse.redirect(new URL('/', request.nextUrl));
-  } else if (!cookie && isNonAuthRoute) {
-      return NextResponse.redirect(new URL('/login', request.nextUrl));
-  }
+    }
 
-  return NextResponse.next();
+    // Continue to the requested page if session exists or if it's a public path
+    return NextResponse.next();
 }
