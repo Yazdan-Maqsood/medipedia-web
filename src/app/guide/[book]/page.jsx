@@ -78,3 +78,12 @@ export async function generateMetadata({ params }) {
     title: "Book - " + data.heading,
   }
 }
+
+// export async function generateStaticParams() {
+//   const datas = await getServerSession(authOptions);
+
+ 
+//   return datas.map((post) => ({
+//     book: post.slug,
+//   }))
+// }

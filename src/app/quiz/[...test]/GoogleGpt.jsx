@@ -37,6 +37,7 @@ export default function GoogleGpt(props) {
         setframe(true)
         setframelink(link)
         setGoogle(false);
+        console.og(framelink);
     }
 
     const onCloseGpt = () => setGpt(false);
