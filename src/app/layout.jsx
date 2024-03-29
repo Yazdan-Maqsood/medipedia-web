@@ -4,7 +4,11 @@ import Navbar from "./components/Navbar";
 import HolyLoader from "holy-loader";
 import { SessionProvider } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
+import dotenv from "dotenv"
 
+dotenv.config({
+  path: './.env'
+})
 
 export default function RootLayout({ children, session }) {
 

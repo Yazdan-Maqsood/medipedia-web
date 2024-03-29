@@ -9,6 +9,7 @@ export const profiledata= async (id)=>{
             method: 'POST',
             body: formData,
         });
+        
         const data = await response.json();
         return data;
     } catch (error) {
