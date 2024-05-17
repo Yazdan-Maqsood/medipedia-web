@@ -1,6 +1,6 @@
 import { apiUrl } from '@/app/config/constant';
 import React from 'react'
-import Form from './form';
+import Form from './Form';
 
 export default async function page({ params }) {
   const data = await getData(params.code)
