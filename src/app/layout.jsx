@@ -53,7 +53,7 @@ export default function RootLayout({ children, session }) {
             easing="linear"
           />
           <Navbar></Navbar>
-          <div className="preloader">
+          {/* <div className="preloader">
             <div className="content">
               <div className="ball"></div>
               <div className="ball"></div>
@@ -66,7 +66,7 @@ export default function RootLayout({ children, session }) {
               <div className="ball"></div>
               <div className="ball"></div>
             </div>
-          </div>
+          </div> */}
           {children}
           <Footer></Footer>
           <Toaster reverseOrder={false}></Toaster>

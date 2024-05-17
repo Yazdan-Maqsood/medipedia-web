@@ -48,7 +48,7 @@ export default function Header() {
                                     ) : (
                                         <h1>
                                             <span>{name}</span>
-                                            <span style={{ fontSize: 20 }}>, Good Evening</span>
+                                            <span style={{ fontSize: 20 }}>, Welcome</span>
                                         </h1>
                                     )}
                                 </>

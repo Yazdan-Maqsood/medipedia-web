@@ -58,7 +58,7 @@ export default function Form() {
 
                 if (data.Success === "true") {
                     // Registration successful
-                    toast.success('You have registered successfully!');
+                    toast.success('Verification email has been sent to your email address!');
                     // Clear form after successful submission
                     setUsername('');
                     setEmail('');

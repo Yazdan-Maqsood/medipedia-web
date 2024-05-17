@@ -40,7 +40,7 @@ export default function Login() {
                     password: password,
                     redirect: false,
                 });
-                // console.log("okkkkkkkkkkk"+signInResponse);
+                 console.log("okkkkkkkkkkk"+signInResponse);
 
                 if (!signInResponse.error) {
                     toast.success("You have login successfully");

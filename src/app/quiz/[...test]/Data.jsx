@@ -332,7 +332,7 @@ export default function page(props) {
                         if (updatedMinutes === 0) {
                             updatedHours -= 1;
                             updatedMinutes = 59;
-                        } else {
+                        } else{
                             updatedMinutes -= 1;
                         }
                         updatedSeconds = 59;
@@ -385,30 +385,22 @@ export default function page(props) {
                             <div>Marks : {marks}</div>
                             <div>Q : {total}/{totaldata}</div>
                         </div>
-
-
-
                         <div className="quiz-lay-thr mt-4">
                             <div>
                                 {!shuuflephase ? (
-
                                     props.data[index].setoptans == null ? (
                                         <></>
                                     ) : (
                                         <GoogleGpt Ques={props.data[index].ques} ></GoogleGpt>
 
                                     )
-
-
                                 ) : (
                                     skiparr[indexskip].setoptans === "" ? (
                                         <></>
                                     ) : (
                                         <GoogleGpt Ques={skiparr[indexskip].ques}  ></GoogleGpt>
                                     )
-
                                 )}
-
                             </div>
                             <div className='pdd-10' >
                                 {props.data[0].setoptans != null ? (

@@ -60,9 +60,6 @@ export default function Navbar() {
 
     } else {
 
-
-
-
         return (
             <nav className="navbar navbar-section navbar-expand-lg sticky">
                 <div className="container-fluid">

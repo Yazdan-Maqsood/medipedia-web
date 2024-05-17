@@ -15,7 +15,7 @@ export default function page() {
                     <div className="col-lg-6 col-md-6 ps-0">
                         <div className="sign-up-form">
                             <h2>Forgot Password  </h2>
-                            <p>Fill your email and password to Recover your password.</p>
+                            <p>Enter your Email below, we will send you password reset mail.</p>
                             <Form></Form>
                         </div>
                     </div>
