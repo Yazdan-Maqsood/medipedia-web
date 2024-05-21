@@ -38,7 +38,6 @@ export const bookcode= async (id)=>{
     try {
         const formData = new FormData();
         formData.append("user_id", id);
-        
         const response = await fetch(`${apiUrl}/profile-data.php`, {
             method: 'POST',
             body: formData,
