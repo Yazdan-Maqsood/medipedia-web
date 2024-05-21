@@ -45,7 +45,7 @@ export default function Form({params}) {
                 formData.append("code", params);
                 formData.append("password", password);
 
-                const response = await fetch(`${apiUrl}/recoverpassword.php`, {
+                const response = await fetch(`https://desired-techs.com/docapp/recoverpassword.php`, {
                     method: 'POST',
                     body: formData,
                 });
