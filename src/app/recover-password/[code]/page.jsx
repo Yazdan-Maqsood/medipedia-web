@@ -36,12 +36,11 @@ export default async function page({ params }) {
 }
 
 async function getData(params) {
-  const res = await fetch(`${apiUrl}/recoverpasswordverify.php?code=${params}`, {
+  const res = await fetch(`https://desired-techs.com/docapp/recoverpasswordverify.php?code=${params}`, {
     method: 'GET',
     cache: 'no-store'
   })
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
   }
   return res.json()

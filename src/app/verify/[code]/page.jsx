@@ -14,7 +14,7 @@ export default async function Page({ params }) {
 
 
 async function getData(params) {
-  const res = await fetch(`https://desired-techs.com/docapp/verify.php?code=${params}`, {
+  const res = await fetch(`${apiUrl}/verify.php?code=${params}`, {
     method: 'GET',
     cache: 'no-store'
   })
