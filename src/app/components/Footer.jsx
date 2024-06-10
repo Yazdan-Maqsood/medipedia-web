@@ -24,7 +24,7 @@ export default function () {
                                 <br></br> <br></br>
                                 <ul className="list-unstyled ps-0 mb-0 d-flex">
                                     <li>
-                                        <Link href="#">
+                                        <Link href="https://play.google.com/store/apps/details?id=com.medical_guide.medipedia">
                                             <img src="/assets/images/play-store.svg" alt="play-store" />
                                         </Link>
                                     </li>
