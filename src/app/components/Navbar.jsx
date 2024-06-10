@@ -137,11 +137,6 @@ export default function Navbar() {
 
                             {session && (
                                 <>
-                                    <li className="nav-item">
-                                        <Link href="/feedback" className="nav-link autoo">
-                                            Feedback
-                                        </Link>
-                                    </li>
                                     <li className="nav-item ali">
                                         <Link href="/guide" className="nav-link autoo ">
                                             Medipedia Guide
