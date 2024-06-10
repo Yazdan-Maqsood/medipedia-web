@@ -1,45 +1,53 @@
-
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 import { apiUrl } from '../config/constant';
 import Data from './Data';
 
 export const metadata = {
-    title: "Medipedia Guide",
+  title: "Medipedia Guide",
 };
 
 export default async function page() {
-    const data = await getData()
-    // console.log(data)
+  const data = await getData();
 
+  if (!data) {
+    // Handle data fetching error or empty response
     return (
+      <section className="courses-category-area ptb-50">
+        <h1 className="text-center">Medipedia Guide</h1>
+        <br />
+        <div className="container mw-1470">
+          <div className="col col-lg-12 row">
+            Oops, there was an issue fetching the data.
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-        <section className="courses-category-area ptb-50">
-            <h1 className="text-center">Medipedia Guide</h1>
-            <br />
-            <div className="container mw-1470">
-                <div className="col col-lg-12 row">
-                    <Data value={data} ></Data>
-                </div>
-            </div>
-        </section>
-
-
-    )
+  return (
+    <section className="courses-category-area ptb-50">
+      <h1 className="text-center">Medipedia Guide</h1>
+      <br />
+      <div className="container mw-1470">
+        <div className="col col-lg-12 row">
+          <Data value={data} />
+        </div>
+      </div>
+    </section>
+  );
 }
-
 
 async function getData() {
+  try {
     const res = await fetch(`${apiUrl}/speclization.php`, {
-        cache: 'no-store'
-    })
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
-    }
-
-    return res.json()
+      cache: 'no-store'
+    });
+    const jsonData = await res.json();
+    // Additional checks can be added here to ensure valid data structure
+    return jsonData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return null; // Indicate error without specific message
+  }
 }
-
-
-   

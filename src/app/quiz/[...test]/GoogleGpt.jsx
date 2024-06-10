@@ -7,6 +7,7 @@ import Ai from '../../components/Ai';
 import Link from 'next/link';
 
 export default function GoogleGpt(props) {
+    console.log(props);
     const [gpt, setGpt] = useState(false);
     const [google, setGoogle] = useState(false);
     const [frame, setframe] = useState(false);
@@ -23,21 +24,18 @@ export default function GoogleGpt(props) {
 
     }
 
-
-
     const onGoogleModal = () => {
 
         fetchData();
-
-
     }
 
 
     function openFrames(link) {
-        setframe(true)
-        setframelink(link)
-        setGoogle(false);
-        console.og(framelink);
+        // setframe(true)
+         setframelink(link)
+        // setGoogle(false);
+        window.open(framelink, '_blank'); // Open the link in a new tab
+        console.log(link);
     }
 
     const onCloseGpt = () => setGpt(false);
@@ -52,7 +50,7 @@ export default function GoogleGpt(props) {
             setLoading(true)
             const apiKey = 'AIzaSyBL4c8q63-Tuq0f5JWgXVRZEkD0iIRX9H4';
             const searchEngineId = '74ef92dbf72f04cfd';
-            const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(props.Ques)}`;
+            const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(props.Ques.ques)}`;
 
             const response = await fetch(url);
             const data = await response.json();
@@ -78,9 +76,10 @@ export default function GoogleGpt(props) {
 
     const fetchResponse = async () => {
         setIsLoading(true);
+        var query = `${props.Ques.ques} Options are ${"A:" + props.Ques.op1}, ${"B:" + props.Ques.op2}, ${"C:" + props.Ques.op3}, ${"D:" + props.Ques.op4}, ${props.Ques.op5 == '' ? '' : "E:" + props.Ques.op5 } Give the right answer and explain in detail`;
         const requestBody = {
             "prompt": {
-                "messages": [{ "content": props.Ques }]
+                "messages": [{ "content": query }]
             },
             "temperature": 0.25,
             "candidateCount": 1,
@@ -136,7 +135,8 @@ export default function GoogleGpt(props) {
                         {!isLoading ? (
                             <div style={{ padding: '15px' }} >
                                 <b>AI Generated Answer:</b>
-                                <p style={{ textAlign: 'justify' }} >{response}</p>
+                                <br></br>
+                                <div style={{lineHeight: '25px',textAlign: 'justify', marginTop: '20px'}} dangerouslySetInnerHTML={{ __html: response }} />
                             </div>
                         ) : (
                             <></>

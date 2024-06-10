@@ -62,7 +62,7 @@ export default function Home() {
                 <img src="assets/images/ai.webp" alt="about-img" />
                 <div className="position-absolute top-50 start-50 translate-middle">
                   <a
-                    href="https://youtu.be/W6NZfCO5SIk?si=IPRT7AKBLok0IYTk"
+                    href=""
                     className="video-btn"
                   >
                     <i className="fa-solid fa-play" />

@@ -391,14 +391,14 @@ export default function page(props) {
                                     props.data[index].setoptans == null ? (
                                         <></>
                                     ) : (
-                                        <GoogleGpt Ques={props.data[index].ques} ></GoogleGpt>
+                                        <GoogleGpt Ques={props.data[index]} ></GoogleGpt>
 
                                     )
                                 ) : (
                                     skiparr[indexskip].setoptans === "" ? (
                                         <></>
                                     ) : (
-                                        <GoogleGpt Ques={skiparr[indexskip].ques}  ></GoogleGpt>
+                                        <GoogleGpt Ques={skiparr[indexskip]}  ></GoogleGpt>
                                     )
                                 )}
                             </div>

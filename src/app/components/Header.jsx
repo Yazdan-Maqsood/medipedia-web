@@ -36,9 +36,9 @@ export default function Header() {
                     <div className="col-lg-6">
                         <div className="banner-content ptb-100" >
                             <span className="top-title">
-                                <span>Online!</span>Global learning platform
+                                {/* <span>Online!</span>Global learning platform */}
                             </span>
-                            {session ? (
+                            {/* {session ? (
                                 <>
                                     {load ? (
                                         <h1>
@@ -56,10 +56,12 @@ export default function Header() {
                                 <h1>
                                     <span>Medical Guide</span>
                                 </h1>
-                            )}
-
+                            )} */}
+<h1>
+                                    <span>Medical Guide</span>
+                                </h1>
                             <p>
-                                Medipedia is an innovative online platform designed exclusively for medical students, providing a comprehensive repository of Multiple Choice Questions (MCQs) to enhance learning and preparation. Tailored to meet the unique needs of medical education, Medipedia offers a vast array of meticulously curated MCQs covering diverse medical specialties, enabling students to test their knowledge, assess their understanding, and reinforce key concepts. With a user-friendly interface and extensive question bank, Medipedia serves as an invaluable resource for aspiring healthcare professionals, facilitating effective exam preparation and fostering continuous learning in the ever-evolving field of medicine.
+                                Medipedia is an innovative online platform designed exclusively for medical students, providing a comprehensive repository of Multiple Choice Questions (MCQs) to enhance learning and preparation. Tailored to meet the unique needs of medical education, Medipedia offers a vast array of meticulously curated MCQs covering diverse medical specialties, enabling students to test their knowledge, assess their understanding, and reinforce key concepts. 
                             </p>
                         </div>
                     </div>
