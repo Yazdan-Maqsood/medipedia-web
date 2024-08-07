@@ -58,7 +58,7 @@ export default function Header() {
                                 </h1>
                             )} */}
 <h1>
-                                    <span>Medical Guide</span>
+                                    <span>Logical Guide</span>
                                 </h1>
                             <p>
                                 Medipedia is an innovative online platform designed exclusively for medical students, providing a comprehensive repository of Multiple Choice Questions (MCQs) to enhance learning and preparation. Tailored to meet the unique needs of medical education, Medipedia offers a vast array of meticulously curated MCQs covering diverse medical specialties, enabling students to test their knowledge, assess their understanding, and reinforce key concepts. 
