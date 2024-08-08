@@ -69,7 +69,7 @@ export default function Login() {
             <div className={`form-floating form-group ${emailError ? 'has-error' : ''}`}>
                 <input
                     type="email"
-                    className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                    className={`form-control ${emailError ? 'is-invalid' : ''} mb-1` }
                     id="emailAddress"
                     placeholder="Email Address"
                     value={email}
@@ -83,7 +83,7 @@ export default function Login() {
             <div className={`form-floating form-group ${passwordError ? "has-error" : ""}`}>
                 <input
                     type={showPassword ? 'text' : 'password'}
-                    className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+                    className={`form-control ${passwordError ? 'is-invalid' : ''} mb-1`}
                     id="password-field1"
                     placeholder="Password"
                     value={password}
@@ -93,7 +93,8 @@ export default function Login() {
                     Password
                 </label>
                 {passwordError && <div className="error text-danger">{passwordError}</div>}
-                <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} className={`icofont-eye${showPassword ? '' : '-alt'} field-icon toggle-password`} />
+                {/* <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} className={`icofont-eye${showPassword ? '' : '-alt'} field-icon toggle-password`} /> */}
+                <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} field-icon toggle-password className="fs-6 me-2"><strong>{showPassword ? "Hide":"Show"}</strong></span>
             </div>
             <div className="submit-btn">
                 <button type="submit" className="main-btn border-0" disabled={loading}>
@@ -114,8 +115,8 @@ export default function Login() {
                     Forgot Password? <br />
                 </Link>
                 Don't have an account?
-                <Link href="/register" className="text-decoration-none">
-                    Register
+                <Link href="/register" className="text-decoration-none ms-1">
+                    Click here!
                 </Link>
             </p>
         </form>

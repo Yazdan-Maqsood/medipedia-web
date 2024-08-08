@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useSession } from "next-auth/react";
 
 
-export default function () {
+export default function Footer() {
     const { data: session, status } = useSession();
 
     return (
@@ -86,7 +86,7 @@ export default function () {
 
                         <div className="col-lg-3 col-sm-6">
                             <div className="footer-single-item">
-                                <h3>Usefull Links</h3>
+                                <h3>Useful Links</h3>
                                 <ul className="list-unstyled ps-0 mb-0 import-link">
                                     <li>
                                         <Link href="/about-us">About us</Link>

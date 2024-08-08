@@ -1381,7 +1381,7 @@
   }
   .nav-right-options ul li .main-btn {
     padding: 17px;
-    border-radius: 50px;
+    border-radius: 30px;
   }
   .nav-right-options.left-option {
     margin-left: 0;
@@ -1751,3 +1751,4 @@
     display: none;
   }
 }
+

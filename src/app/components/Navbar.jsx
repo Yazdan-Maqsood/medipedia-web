@@ -6,28 +6,32 @@ import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
 import Username from "./Username";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+
 
 export default function Navbar() {
     const { data: session, status } = useSession();
     const { push } = useRouter();
 
-    useEffect(() => {
-        const handleBackButton = (event) => {
-            if (event.type === 'popstate') {
-                if (session) {
-                    push('/');
-                }
-            }
-        };
+    // useEffect(() => {
+    //     const handleBackButton = (event) => {
+    //         if (event.type === 'popstate') {
+    //             if (session) {
+    //                 push('/');
+    //             }
+    //         }
+    //     };
 
-        // Add event listener for popstate event
-        window.addEventListener('popstate', handleBackButton);
+    //     // Add event listener for popstate event
+    //     window.addEventListener('popstate', handleBackButton);
 
-        // Clean up function to remove the event listener when the component unmounts
-        return () => {
-            window.removeEventListener('popstate', handleBackButton);
-        };
-    }, [session, push]);
+    //     // Clean up function to remove the event listener when the component unmounts
+    //     return () => {
+    //         window.removeEventListener('popstate', handleBackButton);
+    //     };
+    // }, [session, push]);
 
 
     const handleLogout = async () => {
@@ -43,25 +47,24 @@ export default function Navbar() {
         }
     };
 
-
-
     // Loading state while session status is being fetched
     if (status === "loading") {
 
         return (
-            <nav className="navbar navbar-section navbar-expand-lg sticky">
-                <div className="d-flex justify-content-center " style={{ marginLeft: '10px' }} >
-                    <div className="spinner-border" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </div>
+            <>
+                <div className='main'>
+                    <Skeleton className="loading1" />
+                    <Skeleton className="loading2" />
+                    <Skeleton className="loading3" />
+
                 </div>
-            </nav>
+            </>
         )
 
     } else {
 
         return (
-            <nav className="navbar navbar-section navbar-expand-lg sticky">
+            <nav className="navbar navbar-section navbar-expand-lg">
                 <div className="container-fluid">
                     <Link className="navbar-brand" href="/">
                         <img
@@ -107,7 +110,7 @@ export default function Navbar() {
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <Link href="/" className="nav-link autoo  active">
-                                    Home
+                                 Home
                                 </Link>
                             </li>
                             {!session && (
@@ -167,6 +170,11 @@ export default function Navbar() {
                                             Profile
                                         </Link>
                                     </li>
+                                    <li className="nav-item" onClick={handleLogout} >
+                                    <Link href="/" className="nav-link autoo">
+                                            Logout
+                                        </Link>
+                                    </li>
                                 </>
                             )}
                         </ul>
@@ -174,7 +182,7 @@ export default function Navbar() {
                     <div className="nav-right-options">
                         <ul>
                             {!session ? (
-                                <li>
+                                <li style={{ borderRadius: '5px' }}>
                                     <Link href="/login" className="main-btn">
                                         <span className="d-none d-xl-block">LOGIN / REGISTER</span>
                                         <div className="d-xl-none" >LOGIN / REGISTER</div>
@@ -189,17 +197,11 @@ export default function Navbar() {
                                             
                                         </div>
                                     </li> */}
-                                    <li>
+                                    <li style={{ borderRadius: '5px' }} className="me-2">
                                         <Link href="/guide" className="main-btn">
-                                            <span className="d-none d-xl-block">Dashboard</span>
-                                            <div className="d-xl-none" >Dashboard</div>
+                                            <span className="d-none d-xl-block">Medipedia Guide</span>
+                                            <div className="d-xl-none" >Medipedia Guide</div>
                                         </Link>
-                                    </li>
-                                    <li>
-                                        <div style={{ cursor: 'pointer' }} onClick={handleLogout} className="main-btn">
-                                            <span className="d-none d-xl-block">Logout</span>
-                                            <div className="d-xl-none" >Logout</div>
-                                        </div>
                                     </li>
                                 </>
                             )}
@@ -209,6 +211,5 @@ export default function Navbar() {
             </nav>
         );
     }
-
 
 }

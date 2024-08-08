@@ -54,8 +54,8 @@ export default function Home() {
                 <h2>
                   Empowering Medical Minds
                 </h2>
-                <p>Interactive learning for aspiring medical professionals. Unlock your potential and dive into a world of knowledge tailored for you</p>
-              </div>
+                <p>
+                Master intricate medical concepts with our immersive learning experiences, meticulously crafted to deepen your understanding and elevate your proficiency in the dynamic world of medicine. Embark on this transformative journey and achieve unparalleled expertise.</p></div>
             </div>
             <div className="col-lg-6">
               <div className="mt-4 mt-lg-0 position-relative z-1 text-center">
@@ -113,7 +113,8 @@ export default function Home() {
                 }}
               >
                 <h2>Mastering Medical Concepts</h2>
-                <p>Embark on a journey to master intricate medical concepts through immersive learning experiences meticulously designed to deepen your understanding and elevate your proficiency in the dynamic world of medicine.
+                <p style={{lineHeight:'27px'}}>
+                  Embark on a journey to master intricate medical concepts through immersive learning experiences meticulously designed to deepen your understanding and elevate your proficiency in the dynamic world of medicine.
                 </p>
               </div>
             </div>
@@ -131,7 +132,7 @@ export default function Home() {
                   animationFillMode: "both"
                 }}
               >
-                <img src="assets/images/ok.png" alt="e-teacher-img" />
+                <img className="img-fluid" src="assets/images/doctor.png" alt="e-teacher-img" />
               </div>
             </div>
           </div>

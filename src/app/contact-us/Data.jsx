@@ -86,7 +86,7 @@ export default function Form() {
             <div className={`form-floating form-group ${nameError ? 'has-error' : ''}`}>
                 <input
                     type="text" // Corrected type for name
-                    className={`form-control ${nameError ? 'is-invalid' : ''}`}
+                    className={`form-control ${nameError ? 'is-invalid' : ''} mb-1`}
                     id="nameAddress"
                     placeholder="Name"
                     value={name}
@@ -101,7 +101,7 @@ export default function Form() {
             <div className={`form-floating form-group ${emailError ? 'has-error' : ''}`}>
                 <input
                     type="email"
-                    className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                    className={`form-control ${emailError ? 'is-invalid' : ''} mb-1 `}
                     id="emailAddress"
                     placeholder="Email"
                     value={email}
@@ -115,7 +115,7 @@ export default function Form() {
             {/* Feedback Input */}
             <div className={`form-floating form-group ${feedbackError ? 'has-error' : ''}`}>
                 <textarea
-                    className={`form-control ${feedbackError ? 'is-invalid' : ''}`}
+                    className={`form-control ${feedbackError ? 'is-invalid' : ''} mb-1`}
                     id="feedbackAddress"
                     placeholder="Feedback"
                     value={feedback}

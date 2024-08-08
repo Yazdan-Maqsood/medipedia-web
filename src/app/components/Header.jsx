@@ -32,9 +32,9 @@ export default function Header() {
             data-background="/assets/images/banner/banner-bg.jpg"
         >
             <div className="container mw-1470">
-                <div className="row align-items-center">
-                    <div className="col-lg-6">
-                        <div className="banner-content ptb-100" >
+                <div className="d-flex row align-items-center">
+                    <div className="col-lg-6 order-lg-1 order-sm-2 order-md-2 custom-order-text  ">
+                        <div className="banner-content pt-2 px-2">
                             <span className="top-title">
                                 {/* <span>Online!</span>Global learning platform */}
                             </span>
@@ -60,12 +60,12 @@ export default function Header() {
 <h1>
                                     <span>Medical Guide</span>
                                 </h1>
-                            <p>
+                            <p className='header-para' style={{lineHeight:'33px'}}>
                                 Medipedia is an innovative online platform designed exclusively for medical students, providing a comprehensive repository of Multiple Choice Questions (MCQs) to enhance learning and preparation. Tailored to meet the unique needs of medical education, Medipedia offers a vast array of meticulously curated MCQs covering diverse medical specialties, enabling students to test their knowledge, assess their understanding, and reinforce key concepts. 
                             </p>
                         </div>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 order-lg-2 order-sm-1 order.md-1 custom-order-img">
                         <div className="banner-img">
                             <img src="/assets/images/banner/banner-img.png" alt="banner-img" />
                         </div>

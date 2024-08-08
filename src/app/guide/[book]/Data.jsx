@@ -106,7 +106,8 @@ export default function Data(props) {
                     <div>No data available</div>
                 ) : (
                     props.value.map((object, i) => (
-                        <div key={i} className="col-lg-4" style={{ marginBottom: '15px' }}>
+                        <div key={i} className="col-lg-4">
+                        <div className='box-shadow'>
                             {object.bcs === null ? (
                                 <>
                                     <div className="courses-category-single-item text-center">
@@ -179,6 +180,7 @@ export default function Data(props) {
                                     </div>
                                 </Modal>
                             )}
+                        </div>
                         </div>
                     ))
                 )

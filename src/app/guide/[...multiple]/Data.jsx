@@ -37,17 +37,21 @@ export default function Data(props) {
 
 
                         return (
-                            <div key={i} className="col-lg-4" style={{ marginBottom: '15px' }}>
-                                <Link style={{ cursor: 'pointer' }}
+                            <div key={i} className="col-lg-4">
 
-                                    // onClick={() => onOpenModal(i)} // Pass the index to identify which modal to open
-                                    href={`/guide/${props.preparama}/${props.preparamb}/${object.slug}`}
-                                    className="courses-category-single-item text-center"
-                                >
-                                    <h3>{object.paper_name}</h3>
-                                </Link>
+                                <div className="box-shadow"  >
+                                    <Link style={{ cursor: 'pointer' }}
 
+                                        // onClick={() => onOpenModal(i)} // Pass the index to identify which modal to open
+                                        href={`/guide/${props.preparama}/${props.preparamb}/${object.slug}`}
+                                        className="courses-category-single-item text-center"
+                                    >
+                                        <h3>{object.paper_name}</h3>
+                                    </Link>
+
+                                </div>
                             </div>
+
                         );
                     })
                 )

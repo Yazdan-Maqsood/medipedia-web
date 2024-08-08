@@ -24,7 +24,8 @@ export default function Data(props) {
                 props.value.map(function (object, i) {
 
                     return (
-                        <div style={{ marginBottom: '15px' }} key={i} className="col-lg-4">
+                        <div key={i} className="col-lg-4 ">
+                        <div className="box-shadow"  >
                             <Link
                                 href={`/guide/${object.slug}`} className="courses-category-single-item text-center"
                             >
@@ -34,6 +35,7 @@ export default function Data(props) {
                                     ) : null}
                                 </h3>
                             </Link>
+                        </div>
                         </div>
                     );
                 })

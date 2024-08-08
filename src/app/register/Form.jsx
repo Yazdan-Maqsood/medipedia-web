@@ -135,7 +135,8 @@ export default function Form() {
                     Password
                 </label>
                 {passwordError && <div className="invalid-feedback">{passwordError}</div>}
-                <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} className={`icofont-eye${showPassword ? '' : '-alt'} field-icon toggle-password`} />            </div>
+                <span style={{ position: 'absolute', right: '29px' }} onClick={togglePasswordVisibility} field-icon toggle-password className="fs-6 me-2"><strong>{showPassword ? "Hide":"Show"}</strong></span>
+           </div>
             {/* Phone Number Field */}
             <div className={`form-floating form-group ${phoneNumberError ? 'has-error' : ''}`}>
                 <input

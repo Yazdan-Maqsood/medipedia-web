@@ -93,7 +93,7 @@ function App() {
                             </div>
                             <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
                                 <h3>Life-changing Learning Platform!</h3>
-                                <p>Medipedia has transformed my medical education journey. The interactive quizzes and comprehensive resources have not only boosted my confidence but also deepened my understanding of complex medical topics. Highly recommended!</p>
+                                <p className='slider-para' style={{lineHeight:'27px'}}>Medipedia has transformed my medical education journey. The interactive quizzes and comprehensive resources have not only boosted my confidence but also deepened my understanding of complex medical topics. Highly recommended!</p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ function App() {
                             </div>
                             <div className="flex-grow-1 ms-sm-4 ms-md-0 ms-lg-4">
                                 <h3>Exceptional Resource for Medical Students</h3>
-                                <p>
+                                <p className='slider-para' style={{lineHeight:'27px'}}>
                                     I cannot recommend Medipedia enough! The 24/7 support, user-friendly interface, and vast question bank have been instrumental in my exam preparation. This platform truly goes above and beyond to support medical students on their educational journey.
                                 </p>
                             </div>
