@@ -6,43 +6,15 @@ import Data from "./Data";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
+// export const metadata = {
+//   title: "Book",
+// };
+
 export default async function Page({ params }) {
-  let datas;
-  try {
-    datas = await getServerSession(authOptions);
-  } catch (error) {
-    console.error('Error fetching session data:', error);
-    return (
-      <section className="courses-category-area ptb-50">
-        <h1 className="text-center">Medipedia Guide</h1>
-        <br />
-        <div className="container mw-1470">
-          <div className="col col-lg-12 row">
-            Oops, there was an issue fetching the session data.
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const datas = await getServerSession(authOptions);
+  const data = await getData(params.book, datas.user.id)
 
-  let data;
-  try {
-    data = await getData(params.book, datas.user.id);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return (
-      <section className="courses-category-area ptb-50">
-        <h1 className="text-center">Medipedia Guide</h1>
-        <br />
-        <div className="container mw-1470">
-          <div className="col col-lg-12 row">
-            Oops, there was an issue fetching the data: {error.message}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
+ 
   if (!data) {
     // Handle data fetching error or empty response
     return (
@@ -57,6 +29,7 @@ export default async function Page({ params }) {
       </section>
     );
   }
+  
 
   return (
     <>
@@ -88,6 +61,7 @@ export default async function Page({ params }) {
           </div>
         </div>
       </section>
+
     </>
   );
 }
@@ -101,39 +75,30 @@ async function getData(params, user_id) {
       method: 'POST',
       body: formData,
       cache: 'no-store'
-    });
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    return await res.json();
+    })
+    return res.json()
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error; // Re-throw error to be handled in the calling function
+    return null; // Indicate error without specific message
   }
 }
+
 
 export async function generateMetadata({ params }) {
-  let datas;
-  try {
-    datas = await getServerSession(authOptions);
-  } catch (error) {
-    console.error('Error fetching session data:', error);
-    return {
-      title: "Error - Medipedia Guide",
-    };
-  }
-
-  let data;
-  try {
-    data = await getData(params.book, datas.user.id);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      title: "Error - Medipedia Guide",
-    };
-  }
-
+ 
+  const datas = await getServerSession(authOptions);
+  const data = await getData(params.book, datas.user.id)
+ 
   return {
     title: "Book - " + data.heading,
-  };
+  }
 }
+
+// export async function generateStaticParams() {
+//   const datas = await getServerSession(authOptions);
+
+ 
+//   return datas.map((post) => ({
+//     book: post.slug,
+//   }))
+// }

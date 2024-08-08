@@ -1,4 +1,4 @@
-export const apiUrl="https://moversdispatch.desired-techs.com";
+export const apiUrl="https://moversloader.com/medipedia-api/medipedia-api";
 
 export const profiledata= async (id)=>{
     try {

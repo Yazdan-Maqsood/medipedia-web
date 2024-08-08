@@ -58,7 +58,7 @@ export default function Form() {
 
                 if (data.Success === "true") {
                     // Registration successful
-                    toast.success('Account created successfully!');
+                    toast.success('Your Account created successfully!');
                     // Clear form after successful submission
                     setUsername('');
                     setEmail('');
