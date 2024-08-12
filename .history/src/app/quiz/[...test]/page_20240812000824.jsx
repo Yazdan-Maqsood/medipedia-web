@@ -7,17 +7,23 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 export default async function page({ params }) {
-    let datas;
-    let data;
+    const datas;
+    const data;
     try {
-        datas = await getServerSession(authOptions);
-        data = await getData(params.test[3], datas.user.id)
+         datas = await getServerSession(authOptions);
+         data = await getData(params.test[3], datas.user.id)
     } catch (error) {
-        return (
-            <section className="courses-category-area ptb-50">
-                <h1 className="text-center">Something went wrong try again later!</h1>
-            </section>)
+        return (<section className="courses-category-area ptb-50">
+            <h1 className="text-center">Medipedia Guide</h1>
+            <br />
+            <div className="container mw-1470">
+                <div className="col col-lg-12 row">
+                    Something went wrong try again later!
+                </div>
+            </div>
+        </section>)
     }
+    console.log(data);
 
     function hoursminsec() {
         var length = data.mergedData.length;
@@ -108,8 +114,10 @@ async function getData(params, user_id) {
         cache: 'no-store'
     })
     if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
         throw new Error('Failed to fetch data')
     }
+
     return res.json()
 }
 

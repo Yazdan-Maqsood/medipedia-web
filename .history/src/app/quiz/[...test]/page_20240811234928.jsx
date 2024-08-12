@@ -7,17 +7,9 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 
 export default async function page({ params }) {
-    let datas;
-    let data;
-    try {
-        datas = await getServerSession(authOptions);
-        data = await getData(params.test[3], datas.user.id)
-    } catch (error) {
-        return (
-            <section className="courses-category-area ptb-50">
-                <h1 className="text-center">Something went wrong try again later!</h1>
-            </section>)
-    }
+    const datas = await getServerSession(authOptions);
+    const data = await getData(params.test[3], datas.user.id)
+    console.log(data);
 
     function hoursminsec() {
         var length = data.mergedData.length;
@@ -63,15 +55,11 @@ export default async function page({ params }) {
 
     if (data.type == "new" && data.data.length <= 0) {
         return (
-            <section className="sign-up-section ptb-50">
-                <h1 class="text-center">No data found against this quiz!</h1>
-            </section>
+            <></>
         )
     } else if (data.type == "save" && data.mergedData.length <= 0) {
         return (
-            <section className="sign-up-section ptb-50">
-                <h1 class="text-center">No data found against this quiz!</h1>
-            </section>
+            <></>
         )
     } else {
         return (
@@ -108,23 +96,20 @@ async function getData(params, user_id) {
         cache: 'no-store'
     })
     if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
         throw new Error('Failed to fetch data')
     }
+
     return res.json()
 }
 
 
 export async function generateMetadata({ params }) {
 
-    try {
-        const datas = await getServerSession(authOptions);
-        const data = await getData(params.test[3], datas.user.id)
-        return {
-            title: "Quiz - " + data.heading,
-        }
-    } catch (error) {
-        return {
-            title: "Something went wrong",
-        }
+    const datas = await getServerSession(authOptions);
+    const data = await getData(params.test[3], datas.user.id)
+
+    return {
+        title: "Quiz - " + data.heading,
     }
 }

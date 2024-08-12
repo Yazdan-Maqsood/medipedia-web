@@ -110,6 +110,7 @@ async function getData(params, user_id) {
     if (!res.ok) {
         throw new Error('Failed to fetch data')
     }
+
     return res.json()
 }
 
