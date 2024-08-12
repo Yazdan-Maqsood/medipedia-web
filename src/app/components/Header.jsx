@@ -33,30 +33,8 @@ export default function Header() {
         >
             <div className="container mw-1470">
                 <div className="d-flex row align-items-center">
-                    <div className="col-lg-6 order-lg-1 order-sm-2 order-md-2 custom-order-text  ">
+                    <div className="col-lg-7 order-lg-1 order-sm-2 order-md-2 custom-order-text  ">
                         <div className="banner-content pt-2 px-2">
-                            <span className="top-title">
-                                {/* <span>Online!</span>Global learning platform */}
-                            </span>
-                            {/* {session ? (
-                                <>
-                                    {load ? (
-                                        <h1>
-                                            <span></span>
-                                            <span style={{ fontSize: 20 }}>Loading..</span>
-                                        </h1>
-                                    ) : (
-                                        <h1>
-                                            <span>{name}</span>
-                                            <span style={{ fontSize: 20 }}>, Welcome</span>
-                                        </h1>
-                                    )}
-                                </>
-                            ) : (
-                                <h1>
-                                    <span>Medical Guide</span>
-                                </h1>
-                            )} */}
 <h1>
                                     <span>Medical Guide</span>
                                 </h1>
@@ -65,7 +43,7 @@ export default function Header() {
                             </p>
                         </div>
                     </div>
-                    <div className="col-lg-6 order-lg-2 order-sm-1 order.md-1 custom-order-img">
+                    <div className="col-lg-5 order-lg-2 order-sm-1 order.md-1 custom-order-img">
                         <div className="banner-img">
                             <img src="/assets/images/banner/banner-img.png" alt="banner-img" />
                         </div>

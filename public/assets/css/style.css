@@ -5486,3 +5486,6 @@ fieldset:disabled .btn {
     margin: auto;
   }
 }
+.banner-img img{
+  width: 78% !important;
+}

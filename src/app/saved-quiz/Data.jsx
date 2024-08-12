@@ -9,30 +9,35 @@ import { useRouter } from "next/navigation";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function Data({user_id}) {
+export default function Data({ user_id }) {
     const MySwal = withReactContent(Swal)
     const router = useRouter();
-    const [datass,setData] = useState([])
-    const [loading ,setLoading] = useState(false)
-console.log(datass);
+    const [datass, setData] = useState([])
+    const [loading, setLoading] = useState(false)
+    console.log(datass);
 
-    async function  getData() {
+    async function getData() {
         setLoading(true)
-        const formData = new FormData();
-        formData.append("user_id", user_id);
-        const response = await fetch(`${apiUrl}/saved-quiz.php`, {
-          method: 'POST',
-          body: formData,
-          cache: 'no-store'
-        })
-        const data = await response.json();
-        setData(data.data)
+        try {
+
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            const response = await fetch(`${apiUrl}/saved-quiz.php`, {
+                method: 'POST',
+                body: formData,
+                cache: 'no-store'
+            })
+            const data = await response.json();
+            setData(data.data)
+        } catch (error) {
+            console.log('Error', error)
+        }
         setLoading(false)
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getData()
-    },[])
+    }, [])
     const promptConfirmation = (redirect, test_id) => {
         {
             MySwal.fire({
@@ -46,7 +51,7 @@ console.log(datass);
                 cancelButtonText: "Continue",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    resetdone(redirect,test_id);
+                    resetdone(redirect, test_id);
                 } else {
                     router.push(`/quiz/${redirect}`)
                 }
@@ -57,7 +62,7 @@ console.log(datass);
     }
 
 
-    const resetdone = async (redirect,test_id) => {
+    const resetdone = async (redirect, test_id) => {
 
         try {
             const formData = new FormData();
@@ -92,50 +97,50 @@ console.log(datass);
             <div className="row">
                 {/* <div class="col-lg-1"></div> */}
                 <div className="col-lg-12">
-                    {datass && datass.length > 0 ? (
-                        <form className="shopping-cart">
-                            <div className="text-center table-responsive">
-                            { !loading &&   <table className="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" />
-                                            <th scope="col">Test Name</th>
-                                            <th scope="col">Marks</th>
-                                            <th scope="col">Time</th>
-                                            <th scope="col">Options</th>
+                    <form className="shopping-cart">
+                        {!loading && <div className="text-center table-responsive">
+                            {datass && datass.length > 0 ? (<table className="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" />
+                                        <th scope="col">Test Name</th>
+                                        <th scope="col">Marks</th>
+                                        <th scope="col">Time</th>
+                                        <th scope="col">Options</th>
 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {datass.map((item, index) => (
+                                        <tr key={index}>
+                                            <td className="cart-price">
+                                                <i className="fa fa-book color-custom" />
+                                            </td>
+                                            <td className="cart-price">
+                                                <span className="amount">{item.test_name}</span>
+                                            </td>
+                                            <td className="cart-price">
+                                                <span className="amount">{item.marks}</span>
+                                            </td>
+                                            <td className="cart-price">
+                                                <span className="amount">{item.time}</span>
+                                            </td>
+                                            <td className="cart-price">
+                                                <span className="amount"><i onClick={() => promptConfirmation(`${item.spec_slug}/${item.book_slug}/${item.paper_slug}/${item.test_slug}`, item.test_id)} className="fa fa-eye" ></i></span>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {datass.map((item, index) => (
-                                            <tr key={index}>
-                                                <td className="cart-price">
-                                                    <i className="fa fa-book color-custom" />
-                                                </td>
-                                                <td className="cart-price">
-                                                    <span className="amount">{item.test_name}</span>
-                                                </td>
-                                                <td className="cart-price">
-                                                    <span className="amount">{item.marks}</span>
-                                                </td>
-                                                <td className="cart-price">
-                                                    <span className="amount">{item.time}</span>
-                                                </td>
-                                                <td className="cart-price">
-                                                    <span className="amount"><i onClick={() => promptConfirmation(`${item.spec_slug}/${item.book_slug}/${item.paper_slug}/${item.test_slug}`,item.test_id)} className="fa fa-eye" ></i></span>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table> }
-                            </div>
+                                    ))}
+                                </tbody>
+                            </table>
+                            ) : (
+                            <h4 className="text-center mt-5">No quiz has been saved yet.</h4>
+                            )}
+                        </div>}
+                            {loading && <div>
+                                <Skeleton className="loading-table-head mb-2" />
+                                <Skeleton className="loading-table-body" />
+                            </div>}
                         </form>
-                    ) : (
-                        <div>
-                            <Skeleton className="loading-table-head mb-2" />
-                            <Skeleton className="loading-table-body" />
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

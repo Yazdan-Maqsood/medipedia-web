@@ -14,15 +14,20 @@ console.log(datass);
 
     async function getData() {
         setLoading(true)
-        const formData = new FormData();
-        formData.append("user_id", user_id);
-        const response = await fetch(`${apiUrl}/history.php`, {
+        try{
+
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            const response = await fetch(`${apiUrl}/history.php`, {
             method: 'POST',
             body: formData,
             cache: 'no-store'
         })
         const data = await response.json();
         setData(data)
+    }catch(error){
+        console.log(Error,error)
+    }
         setLoading(false)
     }
     
@@ -64,12 +69,10 @@ console.log(datass);
 
         <div className="container">
         <div className="row">
-            {/* <div class="col-lg-1"></div> */}
             <div className="col-lg-12">
-                {datass && datass.length > 0 ? (
                     <form className="shopping-cart">
-                        <div className="text-center table-responsive">
-                            <table className="table table-bordered">
+                       {!loading && <div className="text-center table-responsive">
+                        {datass && datass.length > 0 ? (<table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col" />
@@ -101,14 +104,15 @@ console.log(datass);
                                     ))}
                                 </tbody>
                             </table>
-                        </div>
+                            ) : (
+                                <h4 className="text-center mt-5">No history found</h4>
+                                )}
+                            </div>}
+                                {loading && <div>
+                                    <Skeleton className="loading-table-head mb-2" />
+                                    <Skeleton className="loading-table-body" />
+                                </div>}
                     </form>
-                ) : (
-                    <div>
-                    <Skeleton className="loading-table-head mb-2" />
-                    <Skeleton className="loading-table-body" />
-                </div>
-                )}
 
             </div>
         </div>

@@ -43,7 +43,9 @@ export default function Data({ user_id }) {
 
     return (
         <>
-            {!loading && <div className="row">
+            {!loading && <div>
+                <div className="row">
+        {dataCode.length === 0 && dataBookCode.length===0 && dataMockCode.length===0?<h4 className="text-center mt-5">No Book Code applied yet</h4>:''}
                 {dataCode.length > 0 && (
                     <div className="col-xl-4">
                         <div className="event-details-content">
@@ -132,19 +134,8 @@ export default function Data({ user_id }) {
                         </div>
                     </div>
                 )}
+                </div>
             </div>}
-            {/* {loading && 
-            <div className="row">
-            <div className="col-md-4">
-            <Skeleton className="loading-table-book me-5" />
-            </div>
-            <div className="col-md-4">
-            <Skeleton className="loading-table-book me-5" />
-            </div>
-            <div className="col-md-4">
-            <Skeleton className="loading-table-book" />
-            </div>
-        </div>} */}
 
             {loading &&
                 <div className="d-flex flex-wrap">
