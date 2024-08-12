@@ -1,19 +1,38 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from 'next/link'
 import toast from "react-hot-toast";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { apiUrl } from '../config/constant';
+import { useRouter } from "next/navigation";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
-
-export default function page(props) {
+export default function Data({user_id}) {
     const MySwal = withReactContent(Swal)
     const router = useRouter();
-    const { data: session, status, update } = useSession();
+    const [datass,setData] = useState([])
+    const [loading ,setLoading] = useState(false)
+console.log(datass);
 
+    async function  getData() {
+        setLoading(true)
+        const formData = new FormData();
+        formData.append("user_id", user_id);
+        const response = await fetch(`${apiUrl}/saved-quiz.php`, {
+          method: 'POST',
+          body: formData,
+          cache: 'no-store'
+        })
+        const data = await response.json();
+        setData(data.data)
+        setLoading(false)
+    }
+    
+    useEffect(()=>{
+        getData()
+    },[])
     const promptConfirmation = (redirect, test_id) => {
         {
             MySwal.fire({
@@ -73,10 +92,10 @@ export default function page(props) {
             <div className="row">
                 {/* <div class="col-lg-1"></div> */}
                 <div className="col-lg-12">
-                    {props.data && props.data.length > 0 ? (
+                    {datass && datass.length > 0 ? (
                         <form className="shopping-cart">
                             <div className="text-center table-responsive">
-                                <table className="table table-bordered">
+                            { !loading &&   <table className="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th scope="col" />
@@ -88,7 +107,7 @@ export default function page(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {props.data.map((item, index) => (
+                                        {datass.map((item, index) => (
                                             <tr key={index}>
                                                 <td className="cart-price">
                                                     <i className="fa fa-book color-custom" />
@@ -108,18 +127,18 @@ export default function page(props) {
                                             </tr>
                                         ))}
                                     </tbody>
-                                </table>
+                                </table> }
                             </div>
                         </form>
                     ) : (
-                        <div className="text-center">No data available.</div>
+                        <div>
+                            <Skeleton className="loading-table-head mb-2" />
+                            <Skeleton className="loading-table-body" />
+                        </div>
                     )}
-
                 </div>
-                {/* <div class="col-lg-1"></div> */}
             </div>
         </div>
 
     );
 }
-

@@ -73,28 +73,6 @@ export default function Navbar() {
                             alt="Logo"
                         />
                     </Link>
-                    <div className="nav-right-options left-option ahad">
-                        <Link
-                            href="/guide"
-                            className="d-flex align-items-center text-decoration-none"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width={13}
-                                height={13}
-                                viewBox="0 0 13 13"
-                                fill="none"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    clipRule="evenodd"
-                                    d="M9.75 9.75H13V13H9.75V9.75ZM4.875 9.75H8.125V13H4.875V9.75ZM0 9.75H3.25V13H0V9.75ZM9.75 4.875H13V8.125H9.75V4.875ZM4.875 4.875H8.125V8.125H4.875V4.875ZM0 4.875H3.25V8.125H0V4.875ZM9.75 0H13V3.25H9.75V0ZM4.875 0H8.125V3.25H4.875V0ZM0 0H3.25V3.25H0V0Z"
-                                    fill="#79817F"
-                                />
-                            </svg>
-                            <span className="courses d-none d-xl-block">Medipedia Guide</span>
-                        </Link>
-                    </div>
                     <div
                         className=""
                         type="button"
@@ -168,6 +146,11 @@ export default function Navbar() {
                                     <li className="nav-item">
                                         <Link href="/profile" className="nav-link autoo ">
                                             Profile
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link href="/how-to-apply" className="nav-link autoo ">
+                                            How to Apply
                                         </Link>
                                     </li>
                                     <li className="nav-item" onClick={handleLogout} >

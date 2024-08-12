@@ -1,100 +1,157 @@
-import React from 'react'
-export default function Data(props) {
+'use client'
+import React, { useEffect, useState } from "react";
+import { apiUrl } from '../config/constant';
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+
+export default function Data({ user_id }) {
+    const [dataCode, setDataCode] = useState([])
+    const [dataBookCode, setDataBookCode] = useState([])
+    const [dataMockCode, setDataMockCode] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    console.log(dataCode)
+    console.log(dataBookCode)
+    console.log(dataMockCode)
+    async function getData() {
+        setLoading(true)
+        try {
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            const responce = await fetch(`${apiUrl}/book-code.php`, {
+                method: 'POST',
+                body: formData,
+                cache: 'no-store'
+            })
+            const data = await responce.json();
+            setDataCode(data.code)
+            setDataBookCode(data.bookcode)
+            setDataMockCode(data.mockcode)
+            setLoading(false)
+        }
+        catch (error) {
+            console.log("Error", error)
+        }
+
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+
+
     return (
-        <div className="row">
+        <>
+            {!loading && <div className="row">
+                {dataCode.length > 0 && (
+                    <div className="col-xl-4">
+                        <div className="event-details-content">
+                            <ul className="mb-0 list-unstyled event-list">
+                                <h2 className="text-center">Seprate Book Code</h2>
+                                {dataCode
+                                    .filter(item => item.user_code !== 0) // Filter items where user_code is not 0
+                                    .map((item, index) => (
+                                        <li className="d-flex" key={index}>
+                                            <div className="flex-shrink-0 pr-b-4">
+                                                <img src="/assets/images/icon/check-2.svg" alt="check-2" />
+                                            </div>
+                                            <div className="flex-grow-1 ms-3">
+                                                <span>
+                                                    {item.book_name} <span className="ms-1">({item.book_price})</span>
+                                                    <span className="fees-a" style={{ marginLeft: '5px' }}>
+                                                        <div style={{ float: 'right' }}>
+                                                            {item.user_code == 0 ? (
+                                                                <><b>pending</b></>
+                                                            ) : (
+                                                                <><b>{item.user_code}</b></>
+                                                            )}
+                                                        </div>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
 
-            {props.code.length === 0 && props.mockcode.length === 0 && props.bookcode.length === 0 && (
-                <center><h4>You have not applied for any book code!</h4></center>
-            )}
 
-            {props.code.length > 0 && (
-                <div className="col-xl-4">
-                    <div className="event-details-content">
-                        <ul className="mb-0 list-unstyled event-list">
-                            <h2 className="text-center">Seprate Book Code</h2>
-                            {props.code
-                                .filter(item => item.user_code !== 0) // Filter items where user_code is not 0
-                                .map((item, index) => (
-                                    <li className="d-flex" key={index}>
+                {dataBookCode.length > 0 && (
+                    <div className="col-xl-4">
+                        <div className="event-details-content">
+                            <ul className="mb-0 list-unstyled event-list">
+                                <h2 className="text-center">All Book Code</h2>
+                                {dataBookCode.map((item, index) => (
+                                    <li key={index} className="d-flex">
                                         <div className="flex-shrink-0 pr-b-4">
                                             <img src="/assets/images/icon/check-2.svg" alt="check-2" />
                                         </div>
                                         <div className="flex-grow-1 ms-3">
-                                            <span>
-                                                {item.book_name}
-                                                <span className="fees-a" style={{ marginLeft: '5px' }}>
-                                                    <div style={{ float: 'right' }}>
-                                                        {item.user_code == 0 ? (
-                                                            <><b>pending</b></>
-                                                        ) : (
-                                                            <><b>{item.user_code}</b></>
-                                                        )}
-                                                    </div>
-                                                </span>
-                                            </span>
+                                            <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
+                                                <div style={{ float: 'right' }}>
+                                                    {item.user_code == 0 ? (
+                                                        <><b>pending</b></>
+                                                    ) : (
+                                                        <><b>{item.user_code}</b></>
+                                                    )}
+                                                </div>
+                                            </span></span>
                                         </div>
                                     </li>
                                 ))}
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+                {dataMockCode.length > 0 && (
+                    <div className="col-xl-4">
+                        <div className="event-details-content">
+                            <ul className="mb-0 list-unstyled event-list">
+                                <h2 className="text-center">Mock Code</h2>
+                                {dataMockCode.map((item, index) => (
+                                    <li key={index} className="d-flex">
+                                        <div className="flex-shrink-0 pr-b-4">
+                                            <img src="/assets/images/icon/check-2.svg" alt="check-2" />
+                                        </div>
+                                        <div className="flex-grow-1 ms-3">
+                                            <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
+                                                <div style={{ float: 'right' }}>
+                                                    {item.user_code == 0 ? (
+                                                        <><b>pending</b></>
+                                                    ) : (
+                                                        <><b>{item.user_code}</b></>
+                                                    )}
+                                                </div>
+                                            </span></span>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
+            </div>}
+            {/* {loading && 
+            <div className="row">
+            <div className="col-md-4">
+            <Skeleton className="loading-table-book me-5" />
+            </div>
+            <div className="col-md-4">
+            <Skeleton className="loading-table-book me-5" />
+            </div>
+            <div className="col-md-4">
+            <Skeleton className="loading-table-book" />
+            </div>
+        </div>} */}
 
-
-            {props.bookcode.length > 0 && (
-                <div className="col-xl-4">
-                    <div className="event-details-content">
-                        <ul className="mb-0 list-unstyled event-list">
-                            <h2 className="text-center">All Book Code</h2>
-                            {props.bookcode.map((item, index) => (
-                                <li className="d-flex">
-                                    <div className="flex-shrink-0 pr-b-4">
-                                        <img src="/assets/images/icon/check-2.svg" alt="check-2" />
-                                    </div>
-                                    <div className="flex-grow-1 ms-3">
-                                        <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
-                                            <div style={{ float: 'right' }}>
-                                                {item.user_code == 0 ? (
-                                                    <><b>pending</b></>
-                                                ) : (
-                                                    <><b>{item.user_code}</b></>
-                                                )}
-                                            </div>
-                                        </span></span>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            )}
-            {props.mockcode.length > 0 && (
-                <div className="col-xl-4">
-                    <div className="event-details-content">
-                        <ul className="mb-0 list-unstyled event-list">
-                            <h2 className="text-center">Mock Code</h2>
-                            {props.mockcode.map((item, index) => (
-                                <li className="d-flex">
-                                    <div className="flex-shrink-0 pr-b-4">
-                                        <img src="/assets/images/icon/check-2.svg" alt="check-2" />
-                                    </div>
-                                    <div className="flex-grow-1 ms-3">
-                                        <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
-                                            <div style={{ float: 'right' }}>
-                                                {item.user_code == 0 ? (
-                                                    <><b>pending</b></>
-                                                ) : (
-                                                    <><b>{item.user_code}</b></>
-                                                )}
-                                            </div>
-                                        </span></span>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            )}
-        </div>
+            {loading &&
+                <div className="d-flex flex-wrap">
+                    <Skeleton className="loading-table-book me-5" />
+                    <Skeleton className="loading-table-book me-5" />
+                    <Skeleton className="loading-table-book" />
+                </div>}
+        </>
     )
 }

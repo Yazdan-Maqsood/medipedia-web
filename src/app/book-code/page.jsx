@@ -11,7 +11,6 @@ export const metadata = {
 
 export default async function page() {
     const datas = await getServerSession (authOptions);
-    const data = await getData(datas.user.id);
 
     return (
         <section className="event-details-section">
@@ -19,25 +18,9 @@ export default async function page() {
                 <div className="ptb-50">
                     <h1 className="text-center">Books Code</h1>
                     <br />
-                    <Data code={data.code} bookcode={data.bookcode} mockcode={data.mockcode} ></Data>
+                    <Data user_id={datas.user.id} />
                 </div>
             </div>
         </section>
     )
-}
-
-
-async function getData(user_id) {
-  const formData = new FormData();
-  formData.append("user_id", user_id);
-  const res = await fetch(`${apiUrl}/book-code.php`, {
-    method: 'POST',
-    body: formData,
-    cache: 'no-store'
-  })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
 }

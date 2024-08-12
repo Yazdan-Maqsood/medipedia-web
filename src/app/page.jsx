@@ -1,6 +1,7 @@
 import Slider from "./components/Slider";
 import Header from "./components/Header";
 import Username from "./components/Username";
+import FAQ from "./components/FAQ";
 
 export const metadata = {
   title: "Medipedia",
@@ -55,7 +56,8 @@ export default function Home() {
                   Empowering Medical Minds
                 </h2>
                 <p>
-                Master intricate medical concepts with our immersive learning experiences, meticulously crafted to deepen your understanding and elevate your proficiency in the dynamic world of medicine. Embark on this transformative journey and achieve unparalleled expertise.</p></div>
+
+                Master intricate medical concepts with our immersive learning experiences, meticulously crafted to deepen your understanding and elevate your proficiency in the dynamic world of medicine. Embark on this transformative journey, harnessing cutting-edge technology and expert insights to achieve unparalleled expertise. Empower your career, make a lasting impact in healthcare, and stay ahead with our continuously updated, comprehensive, and innovative approach to medical education.</p></div>
             </div>
             <div className="col-lg-6">
               <div className="mt-4 mt-lg-0 position-relative z-1 text-center">
@@ -78,6 +80,14 @@ export default function Home() {
       <br></br>
       <br></br>
       <br></br>
+
+      <FAQ></FAQ>
+
+    <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+
 
       <section className="students-expressed-section pb-75 bg-img">
         <div className="container mw-1470">

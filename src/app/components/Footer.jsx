@@ -1,10 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 
 export default function Footer() {
     const { data: session, status } = useSession();
+    const router = useRouter();
 
     return (
         <>
@@ -79,6 +81,7 @@ export default function Footer() {
                                         <li>
                                             <Link href="/book-code">Books Code</Link>
                                         </li>
+                                       
                                     </ul>
                                 </div>
                             )}
@@ -100,6 +103,9 @@ export default function Footer() {
                                     <li>
                                         <Link href="/dmca-policy">DMCA policy</Link>
                                     </li>
+                                    <li>
+                                        <Link href="/faq">FAQ's</Link>
+                                        </li>
                                 </ul>
                             </div>
                         </div>
@@ -124,8 +130,7 @@ export default function Footer() {
                     </div>
                 </div>
             </section>
-            {/*=== End Footer Section ===*/}
-            <div className="help-icon" title="Help">
+            <div className="help-icon" title="Help" onClick={()=> router.push("/how-to-apply") }>
                 ?
             </div>
         </>
