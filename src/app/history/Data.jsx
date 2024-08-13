@@ -9,7 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 export default function Data({user_id}) {
     const router = useRouter();
     const [datass,setData] = useState([])
-    const [loading ,setLoading] = useState(false)
+    const [loading ,setLoading] = useState(true)
 console.log(datass);
 
     async function getData() {
@@ -106,7 +106,7 @@ console.log(datass);
                             </table>
                             ) : (
                                 <h4 className="text-center mt-5">No history found</h4>
-                                )}
+                            )}
                             </div>}
                                 {loading && <div>
                                     <Skeleton className="loading-table-head mb-2" />

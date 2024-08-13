@@ -69,12 +69,12 @@ export default function Data(props) {
                 if (data.Success == "true") {
                     toast.success('code verified successfuly!');
                     handleCloseModal();
-                    router.push(`/guide/${props.preparams}`);
-
+                    router.push(`/guide/${props.preparams}?type=refresh`);
+                    
                 } else if (data.Success == "false") {
                     toast.success('code already verified successfuly!');
                     handleCloseModal();
-                    router.push(`/guide/${props.preparams}`);
+                    router.push(`/guide/${props.preparams}?type=refresh`);
                 } else {
                     toast.error('Invalid code!');
                 }

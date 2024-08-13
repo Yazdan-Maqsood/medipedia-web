@@ -8,7 +8,7 @@ export default function Data({ user_id }) {
     const [dataCode, setDataCode] = useState([])
     const [dataBookCode, setDataBookCode] = useState([])
     const [dataMockCode, setDataMockCode] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     console.log(dataCode)
     console.log(dataBookCode)
@@ -47,10 +47,10 @@ export default function Data({ user_id }) {
                 <div className="row">
         {dataCode.length === 0 && dataBookCode.length===0 && dataMockCode.length===0?<h4 className="text-center mt-5">No Book Code applied yet</h4>:''}
                 {dataCode.length > 0 && (
-                    <div className="col-xl-4">
+                    <div className="col-xl-4 mb-3">
                         <div className="event-details-content">
                             <ul className="mb-0 list-unstyled event-list">
-                                <h2 className="text-center">Seprate Book Code</h2>
+                                <h2 className="text-center mb-4">Seprate Book Code</h2>
                                 {dataCode
                                     .filter(item => item.user_code !== 0) // Filter items where user_code is not 0
                                     .map((item, index) => (
@@ -64,7 +64,7 @@ export default function Data({ user_id }) {
                                                     <span className="fees-a" style={{ marginLeft: '5px' }}>
                                                         <div style={{ float: 'right' }}>
                                                             {item.user_code == 0 ? (
-                                                                <><b>pending</b></>
+                                                                <><b className="fs-6">pending</b></>
                                                             ) : (
                                                                 <><b>{item.user_code}</b></>
                                                             )}
@@ -81,10 +81,10 @@ export default function Data({ user_id }) {
 
 
                 {dataBookCode.length > 0 && (
-                    <div className="col-xl-4">
+                    <div className="col-xl-4 mb-3">
                         <div className="event-details-content">
                             <ul className="mb-0 list-unstyled event-list">
-                                <h2 className="text-center">All Book Code</h2>
+                                <h2 className="text-center mb-4">All Book Code (2000)</h2>
                                 {dataBookCode.map((item, index) => (
                                     <li key={index} className="d-flex">
                                         <div className="flex-shrink-0 pr-b-4">
@@ -94,7 +94,7 @@ export default function Data({ user_id }) {
                                             <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
                                                 <div style={{ float: 'right' }}>
                                                     {item.user_code == 0 ? (
-                                                        <><b>pending</b></>
+                                                        <><b className="fs-6">pending</b></>
                                                     ) : (
                                                         <><b>{item.user_code}</b></>
                                                     )}
@@ -111,7 +111,7 @@ export default function Data({ user_id }) {
                     <div className="col-xl-4">
                         <div className="event-details-content">
                             <ul className="mb-0 list-unstyled event-list">
-                                <h2 className="text-center">Mock Code</h2>
+                                <h2 className="text-center mb-4">Mock Code (500)</h2>
                                 {dataMockCode.map((item, index) => (
                                     <li key={index} className="d-flex">
                                         <div className="flex-shrink-0 pr-b-4">
@@ -121,7 +121,7 @@ export default function Data({ user_id }) {
                                             <span>{item.book_name}<span className="fees-a" style={{ marginLeft: '5px' }}>
                                                 <div style={{ float: 'right' }}>
                                                     {item.user_code == 0 ? (
-                                                        <><b>pending</b></>
+                                                        <><b className="fs-6">pending</b></>
                                                     ) : (
                                                         <><b>{item.user_code}</b></>
                                                     )}

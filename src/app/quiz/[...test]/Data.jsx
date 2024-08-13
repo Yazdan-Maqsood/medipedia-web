@@ -251,7 +251,7 @@ export default function page(props) {
             // Log form data before sending the request
             console.log("Form Data:", formData);
 
-            const response = await fetch(`${apiUrl}/reset.php`, {
+            const response = await fetch(`${apiUrl}/resets.php`, {
                 method: 'POST',
                 body: formData,
             });
@@ -401,7 +401,7 @@ export default function page(props) {
                     </div>
                 </div>
             ) : (
-                <div className="col-lg-10 col-md-10 ps-0">
+                <div className="col-lg-10 col-md-12 ps-0">
                     <div style={{ paddingTop: '21px', paddingBottom: '21px' }} className="sign-up-form">
                         <div className="timr">
                             <div>{duration.hours.toString().padStart(2, '0')}</div>
