@@ -5489,3 +5489,8 @@ fieldset:disabled .btn {
 .banner-img img{
   width: 78% !important;
 }
+@media screen and (max-width: 1400px) {
+  .sign-up-section .container{
+    max-width: 100vw !important;
+  }
+}

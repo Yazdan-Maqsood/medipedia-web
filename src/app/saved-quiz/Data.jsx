@@ -6,14 +6,16 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { apiUrl } from '../config/constant';
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Data({ user_id }) {
+    const { data: session, status, update } = useSession();
     const MySwal = withReactContent(Swal)
     const router = useRouter();
     const [datass, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     console.log(datass);
 
     async function getData() {
@@ -70,7 +72,7 @@ export default function Data({ user_id }) {
             formData.append("user_id", session.user.id);
 
 
-            const response = await fetch(`${apiUrl}/reset.php`, {
+            const response = await fetch(`${apiUrl}/resets.php`, {
                 method: 'POST',
                 body: formData,
             });
@@ -107,7 +109,6 @@ export default function Data({ user_id }) {
                                         <th scope="col">Marks</th>
                                         <th scope="col">Time</th>
                                         <th scope="col">Options</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
