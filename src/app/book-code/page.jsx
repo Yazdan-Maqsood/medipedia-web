@@ -11,7 +11,6 @@ export const metadata = {
 
 export default async function page() {
     const datas = await getServerSession (authOptions);
-
     return (
         <section className="event-details-section">
             <div className="container mw-1470">

@@ -10,6 +10,12 @@ export default function Data({ user_id }) {
     const [dataMockCode1, setDataMockCode1] = useState([])
     const [dataBookCode2, setDataBookCode2] = useState([])
     const [dataMockCode2, setDataMockCode2] = useState([])
+
+    const [bookcode1Price, setbookcode1Price] = useState('')
+    const [bookcode2Price, setbookcode2Price] = useState('')
+    const [mockcode1Price, setmockcode1Price] = useState('')
+    const [mockcode2Price, setmockcode2Price] = useState('')
+
     const [loading, setLoading] = useState(false)
 
     // console.log(dataCode)
@@ -31,6 +37,12 @@ export default function Data({ user_id }) {
             setDataMockCode1(data.mockcode1)
             setDataBookCode2(data.bookcode2)
             setDataMockCode2(data.mockcode2)
+
+            setbookcode1Price(data.bookcode1Price)
+            setbookcode2Price(data.bookcode2Price)
+            setmockcode1Price(data.mockcode3Price)
+            setmockcode2Price(data.mockcode4Price)
+
             setLoading(false)
         }
         catch (error) {
@@ -105,6 +117,7 @@ export default function Data({ user_id }) {
                                         </div>
                                     </li>
                                 ))}
+                                <h4 className="fee">Fee: {bookcode1Price}</h4>
                             </ul>
                         </div>
                     </div>
@@ -132,6 +145,7 @@ export default function Data({ user_id }) {
                                         </div>
                                     </li>
                                 ))}
+                                <h4 className="fee">Fee: {bookcode2Price}</h4>
                             </ul>
                         </div>
                     </div>
@@ -159,6 +173,7 @@ export default function Data({ user_id }) {
                                         </div>
                                     </li>
                                 ))}
+                                 <h4 className="fee">Fee: {mockcode1Price}</h4>
                             </ul>
                         </div>
                     </div>
@@ -186,6 +201,7 @@ export default function Data({ user_id }) {
                                         </div>
                                     </li>
                                 ))}
+                               <h4 className="fee">Fee: {mockcode2Price}</h4>
                             </ul>
                         </div>
                     </div>

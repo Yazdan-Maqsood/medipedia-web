@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Data(props) {
+    console.log(props)
     return (
         <div className="row">
 
@@ -20,7 +21,7 @@ export default function Data(props) {
                                 </div>
                             </li>
                         ))}
-                        {/* <h4 className="fee">Fee: {props.allbooksPrice}</h4> */}
+                        <h4 className="fee">Fee: {props.bookcode2Price}</h4>
                     </ul>
                 </div>
             </div>
@@ -38,7 +39,7 @@ export default function Data(props) {
                                 </div>
                             </li>
                         ))}
-                        {/* <h4 className="fee">Fee: {props.allbooksPrice}</h4> */}
+                        <h4 className="fee">Fee: {props.bookcode1Price}</h4>
                     </ul>
                 </div>
             </div>
@@ -56,7 +57,7 @@ export default function Data(props) {
                                 </div>
                             </li>
                         ))}
-                        {/* <h4 className="fee">Fee:  {props.allmockPrice}</h4> */}
+                        <h4 className="fee">Fee:  {props.mockcode3Price}</h4>
                     </ul>
                 </div>
             </div>
@@ -74,7 +75,7 @@ export default function Data(props) {
                                 </div>
                             </li>
                         ))}
-                        {/* <h4 className="fee">Fee:  {props.allmockPrice}</h4> */}
+                        <h4 className="fee">Fee:  {props.mockcode4Price}</h4>
                     </ul>
                 </div>
             </div>

@@ -10,7 +10,8 @@ import { useRouter } from "next/navigation";
 
 export default function Data(props) {
 
-   
+     console.log(props);
+     
 
     const { data: session, status, update } = useSession();
     const [isLoading, setIsLoading] = useState(true);

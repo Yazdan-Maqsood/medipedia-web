@@ -7,6 +7,7 @@ export const metadata = {
     title: 'Book Prices - Medipedia',
 }
 
+
 export default async function page() {
     const data = await getData()
 
@@ -16,7 +17,7 @@ export default async function page() {
                 <div className="ptb-50">
                     <h1 className="text-center">Books Prices</h1>
                     <br />
-                    <Data bookBundle2={data.bookBundle2} bookBundle1={data.bookBundle1}  books={data.books} mockBundle1={data.mockBundle1}  mockBundle2={data.mockBundle2}  ></Data>
+                    <Data bookcode1Price={data.bookcode1Price} bookcode2Price={data.bookcode2Price} mockcode3Price={data.mockcode3Price} mockcode4Price={data.mockcode4Price} bookBundle2={data.bookBundle2} bookBundle1={data.bookBundle1}  books={data.books} mockBundle1={data.mockBundle1}  mockBundle2={data.mockBundle2}  ></Data>
                 </div>
             </div>
         </section>
