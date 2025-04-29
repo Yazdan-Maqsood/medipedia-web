@@ -26,19 +26,20 @@ export default function Data(props){
 
     return (
         <div className="terms-conditions-section pt-50">
-            <h1 className="text-center">Result: {Math.round(percentage)}%</h1>
+            <h1 className="text-center">Result: {isNaN(percentage) ? 0 : Math.round(percentage)}%</h1>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <br></br>
+                        <br />
                         Attempted Questions: {props.data.total}
-                        <br></br>
+                        <br />
                         Your Marks: {props.data.marks}
-                        <br></br><br></br>
+                        <br /><br />
                         <h3>{remarks}</h3>
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
+    
 }
