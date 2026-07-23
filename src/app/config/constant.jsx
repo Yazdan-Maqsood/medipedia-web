@@ -16,7 +16,6 @@ export const profiledata= async (id)=>{
         //setError('Something went wrong');
         console.log(error)
     }
-
 }
 
 export const SlugToTitle = (slug) => {
