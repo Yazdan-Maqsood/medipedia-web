@@ -9,7 +9,6 @@ export const metadata = {
     title: "Login to Medipedia",
 };
 
-
 export default async function page() {
 
     const data = await getServerSession(authOptions);
@@ -52,12 +51,4 @@ export default async function page() {
         )
 
     }
-
-
-
 }
-
-
-
-
-
