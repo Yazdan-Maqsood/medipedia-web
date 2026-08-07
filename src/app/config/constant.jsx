@@ -1,11 +1,13 @@
 export const apiUrl="https://medipedia-web-api.desired-techs.com";
 
-export const profiledata= async (id)=>{
+// config/constant.js
+export const profiledata = async (id) => {
     try {
         const formData = new FormData();
         formData.append("user_id", id);
         
-        const response = await fetch(`${apiUrl}/profile-data.php`, {
+        // Use Vercel API route instead of direct PHP
+        const response = await fetch(`/api/profile`, {
             method: 'POST',
             body: formData,
         });
@@ -13,10 +15,10 @@ export const profiledata= async (id)=>{
         const data = await response.json();
         return data;
     } catch (error) {
-        //setError('Something went wrong');
-        console.log(error)
+        console.error('Error:', error);
+        return { user_name: 'User', success: false };
     }
-}
+};
 
 export const SlugToTitle = (slug) => {
     const title = slug

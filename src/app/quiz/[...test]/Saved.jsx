@@ -117,15 +117,6 @@ export default function Saved(props) {
         }
     };
 
-
-
-
-
-
-
-
-
-
     const [showExplanation, setShowExplanation] = useState(false);
     const handleNext = () => {
         if (!shuuflephase) {
