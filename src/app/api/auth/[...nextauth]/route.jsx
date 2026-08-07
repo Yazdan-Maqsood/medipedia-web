@@ -4,37 +4,48 @@ import { apiUrl } from "@/app/config/constant";
 
 async function login(credentials) {
     try {
+        console.log("1. Login function called with:", credentials);
+        
         const formData = new FormData();
         formData.append("user_email", credentials.email);
         formData.append("user_pass", credentials.password);
         
-        // ✅ Correct URL - without .php
-        const response = await fetch(`${apiUrl}/login`, {
+        const loginUrl = `${apiUrl}/login`;
+        console.log("2. Fetching URL:", loginUrl);
+        
+        const response = await fetch(loginUrl, {
             method: "POST",
             body: formData,
         });
 
-        // Get response text
+        console.log("3. Response status:", response.status);
+        
         const responseText = await response.text();
-        console.log("Raw login response:", responseText);
+        console.log("4. Raw response:", responseText);
 
-        // Parse JSON
         let data;
         try {
             data = JSON.parse(responseText);
+            console.log("5. Parsed data:", data);
         } catch (e) {
-            console.error("Failed to parse JSON:", responseText);
+            console.error("6. Failed to parse JSON:", responseText);
             throw new Error("Invalid response from server");
         }
 
         if (!response.ok) {
-            throw new Error(data.error || "Authentication failed");
+            throw new Error(data.error || `HTTP ${response.status}`);
         }
 
+        if (!data.id) {
+            console.error("7. No ID in response:", data);
+            throw new Error("No user ID returned");
+        }
+
+        console.log("8. Login successful!");
         return data;
     } catch (error) {
         console.error("Login error:", error);
-        throw new Error(error.message);
+        throw error;
     }
 }
 
@@ -51,32 +62,33 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 try {
+                    console.log("A. Authorize called with:", credentials);
+                    
                     if (!credentials?.email || !credentials?.password) {
-                        console.log("Missing credentials");
+                        console.log("B. Missing credentials");
                         return null;
                     }
 
                     const user = await login(credentials);
-                    console.log("User data from backend:", user);
+                    console.log("C. User from login:", user);
 
-                    // ✅ Check if user exists and has data
-                    if (user && user.id && user.success !== false) {
+                    if (user && user.id) {
                         const loggedInUser = {
-                            id: user.id.toString(), // Convert to string for NextAuth
+                            id: String(user.id),
                             email: user.user_email,
                             name: user.user_name,
                             user_no: user.user_no,
                             is_verified: user.is_verified,
                             status: user.status
                         };
-                        console.log("Authorize success:", loggedInUser);
+                        console.log("D. Returning user:", loggedInUser);
                         return loggedInUser;
                     } else {
-                        console.log("Authorize failed:", user?.error || "No user data");
+                        console.log("E. No valid user data:", user);
                         return null;
                     }
                 } catch (error) {
-                    console.error("Authorize error:", error);
+                    console.error("F. Authorize error:", error);
                     return null;
                 }
             },
@@ -88,6 +100,7 @@ export const authOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
+            console.log("JWT callback:", { token, user });
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -99,6 +112,7 @@ export const authOptions = {
             return token;
         },
         async session({ session, token }) {
+            console.log("Session callback:", { session, token });
             if (token) {
                 session.user.id = token.id;
                 session.user.email = token.email;
