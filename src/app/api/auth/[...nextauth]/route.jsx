@@ -9,7 +9,7 @@ async function login(credentials) {
     const formData = new FormData();
                 formData.append("user_email", credentials.email);
                 formData.append("user_pass", credentials.password);
-    const response = await fetch(`${apiUrl}/login.php`, {
+    const response = await fetch(`${apiUrl}/login`, {
       method: "POST",
       body: formData,
     });
@@ -105,8 +105,6 @@ export const authOptions = {
       return session
     }
   },
-  
-  
 };
 
 const handler = NextAuth(authOptions);
