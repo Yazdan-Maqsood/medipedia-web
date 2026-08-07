@@ -7,7 +7,7 @@ export const profiledata = async (id) => {
         formData.append("user_id", id);
         
         // Use Vercel API route instead of direct PHP
-        const response = await fetch(`/api/profile`, {
+        const response = await fetch(`${apiUrl}/profile`, {
             method: 'POST',
             body: formData,
         });
@@ -33,8 +33,6 @@ export const SlugToTitle = (slug) => {
     return <>{title}</>;
 }
 
-
-
 export const bookcode= async (id)=>{
     try {
         const formData = new FormData();
@@ -49,5 +47,4 @@ export const bookcode= async (id)=>{
         //setError('Something went wrong');
         console.log(error)
     }
-
 }
