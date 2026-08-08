@@ -24,7 +24,7 @@ const handler = NextAuth({
                     formData.append("user_pass", credentials.password);
 
                     // Call your backend
-                    const response = await fetch("https://medipedia-web-api.desired-techs.com/login", {
+                    const response = await fetch("https://medipedia-web-api.desired-techs.com/login.php", {
                         method: "POST",
                         body: formData,
                     });
