@@ -14,7 +14,7 @@ export const profiledata = async (id) => {
         const formData = new FormData();
         formData.append("user_id", id);
         
-        const response = await fetch(`${apiUrl}/profile-data`, {
+        const response = await fetch(`${apiUrl}/profile-data.php`, {
             method: 'POST',
             body: formData,
         });
@@ -42,7 +42,7 @@ export const bookcode = async (id) => {
         const formData = new FormData();
         formData.append("user_id", id);
         
-        const response = await fetch(`${apiUrl}/book-code`, {
+        const response = await fetch(`${apiUrl}/book-code.php`, {
             method: 'POST',
             body: formData,
         });
