@@ -45,9 +45,11 @@ const handler = NextAuth({
                     }
 
                     // Check if login was successful
+                   // Check if login was successful
                     if (!response.ok) {
-                        console.log("❌ Login failed:", userData.error || "Unknown error");
-                        return null;
+                        console.log("❌ Login failed:", userData?.error || "Unknown error");
+                        // 'return null' ki jagah error throw karein, taake frontend ko message mil jaye
+                        throw new Error(userData?.error || "Invalid email or password"); 
                     }
 
                     // Check if user data is valid
