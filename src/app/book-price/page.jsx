@@ -7,7 +7,6 @@ export const metadata = {
     title: 'Book Prices - Medipedia',
 }
 
-
 export default async function page() {
     const data = await getData()
 

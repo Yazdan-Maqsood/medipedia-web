@@ -1,106 +1,90 @@
-import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
-import { apiUrl } from "@/app/config/constant";
+import CredentialsProvider from "next-auth/providers/credentials";
 
-async function login(credentials) {
-    try {
-        console.log("1. Login function called with:", credentials);
-        
-        const formData = new FormData();
-        formData.append("user_email", credentials.email);
-        formData.append("user_pass", credentials.password);
-        
-        const loginUrl = `${apiUrl}/login`;
-        console.log("2. Fetching URL:", loginUrl);
-        
-        const response = await fetch(loginUrl, {
-            method: "POST",
-            body: formData,
-        });
-
-        console.log("3. Response status:", response.status);
-        
-        const responseText = await response.text();
-        console.log("4. Raw response:", responseText);
-
-        let data;
-        try {
-            data = JSON.parse(responseText);
-            console.log("5. Parsed data:", data);
-        } catch (e) {
-            console.error("6. Failed to parse JSON:", responseText);
-            throw new Error("Invalid response from server");
-        }
-
-        if (!response.ok) {
-            throw new Error(data.error || `HTTP ${response.status}`);
-        }
-
-        if (!data.id) {
-            console.error("7. No ID in response:", data);
-            throw new Error("No user ID returned");
-        }
-
-        console.log("8. Login successful!");
-        return data;
-    } catch (error) {
-        console.error("Login error:", error);
-        throw error;
-    }
-}
-
-export const authOptions = {
-    pages: {
-        signIn: "/login",
-    },
+const handler = NextAuth({
     providers: [
         CredentialsProvider({
-            name: "credentials",
+            name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
                 try {
-                    console.log("A. Authorize called with:", credentials);
+                    console.log("🔐 Authorize called with:", credentials?.email);
                     
                     if (!credentials?.email || !credentials?.password) {
-                        console.log("B. Missing credentials");
+                        console.log("❌ Missing credentials");
                         return null;
                     }
 
-                    const user = await login(credentials);
-                    console.log("C. User from login:", user);
+                    // Create FormData
+                    const formData = new FormData();
+                    formData.append("user_email", credentials.email);
+                    formData.append("user_pass", credentials.password);
 
-                    if (user && user.id) {
-                        const loggedInUser = {
-                            id: String(user.id),
-                            email: user.user_email,
-                            name: user.user_name,
-                            user_no: user.user_no,
-                            is_verified: user.is_verified,
-                            status: user.status
-                        };
-                        console.log("D. Returning user:", loggedInUser);
-                        return loggedInUser;
-                    } else {
-                        console.log("E. No valid user data:", user);
+                    // Call your backend
+                    const response = await fetch("https://medipedia-web-api.desired-techs.com/login", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    console.log("📡 Response status:", response.status);
+
+                    // Get raw response
+                    const rawResponse = await response.text();
+                    console.log("📝 Raw response:", rawResponse);
+
+                    // Parse JSON
+                    let userData;
+                    try {
+                        userData = JSON.parse(rawResponse);
+                    } catch (e) {
+                        console.error("❌ Failed to parse JSON:", rawResponse);
                         return null;
                     }
+
+                    // Check if login was successful
+                    if (!response.ok) {
+                        console.log("❌ Login failed:", userData.error || "Unknown error");
+                        return null;
+                    }
+
+                    // Check if user data is valid
+                    if (!userData.id) {
+                        console.log("❌ No ID in response:", userData);
+                        return null;
+                    }
+
+                    // Return user object for NextAuth
+                    const user = {
+                        id: String(userData.id),
+                        email: userData.user_email,
+                        name: userData.user_name,
+                        user_no: userData.user_no || "",
+                        is_verified: userData.is_verified || 0,
+                        status: userData.status || 0,
+                    };
+
+                    console.log("✅ Login successful:", user);
+                    return user;
+
                 } catch (error) {
-                    console.error("F. Authorize error:", error);
+                    console.error("❌ Authorize error:", error);
                     return null;
                 }
-            },
-        }),
+            }
+        })
     ],
-    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },
+    pages: {
+        signIn: "/login",
+        error: "/login",
+    },
     callbacks: {
         async jwt({ token, user }) {
-            console.log("JWT callback:", { token, user });
             if (user) {
                 token.id = user.id;
                 token.email = user.email;
@@ -112,7 +96,6 @@ export const authOptions = {
             return token;
         },
         async session({ session, token }) {
-            console.log("Session callback:", { session, token });
             if (token) {
                 session.user.id = token.id;
                 session.user.email = token.email;
@@ -124,7 +107,7 @@ export const authOptions = {
             return session;
         }
     },
-};
+    secret: process.env.NEXTAUTH_SECRET,
+});
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
