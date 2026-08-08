@@ -2,15 +2,21 @@ import React from 'react'
 import Link from 'next/link'
 import { apiUrl } from '../config/constant';
 import Data from './Data';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'Book Code - Medipedia',
 }
 
 export default async function page() {
-    const datas = await getServerSession (authOptions);
+    const datas = await getServerSession(authOptions);
+
+    if (!datas?.user?.id) {
+        redirect('/login');
+    }
+
     return (
         <section className="event-details-section">
             <div className="container mw-1470">

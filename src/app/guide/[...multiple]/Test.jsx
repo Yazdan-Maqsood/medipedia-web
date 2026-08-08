@@ -64,6 +64,11 @@ export default function Data(props) {
 
 
     const resetdone = async (redirect) => {
+        // Guard: session is null while NextAuth is still loading.
+        if (!session?.user?.id) {
+            toast.error("Your session expired. Please log in again.");
+            return;
+        }
 
         try {
             const formData = new FormData();

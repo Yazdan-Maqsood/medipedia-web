@@ -1,20 +1,19 @@
 "use client";
-import React from "react";
+import { useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from 'next/router';
+// App Router: must be next/navigation, NOT next/router (that is Pages Router
+// only and throws "NextRouter was not mounted" at runtime).
+import { useRouter } from "next/navigation";
 
 export function Authentication() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
 
-    if (status === "loading") {
-        // If session status is still loading, return null or a loading indicator
-        return null;
-    }
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login");
+        }
+    }, [status, router]);
 
-    if (!session) {
-        // If user is not authenticated, redirect to the login page
-        router.push("/login");
-    }
+    return null;
 }
-

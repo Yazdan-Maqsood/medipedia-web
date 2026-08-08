@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { apiUrl } from '../config/constant';
 import Data from './Data';
 
 export default function Page() {
+  const { data: session, status } = useSession();
   const [selectedVersion, setSelectedVersion] = useState(null);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,28 +23,27 @@ export default function Page() {
     user_no: '',
   });
 
+  // Take the identity from the NextAuth session — NEVER from localStorage.
+  // This previously fell back to a hard-coded account (id 8251), so every
+  // logged-in user ended up applying for books as that one person.
   useEffect(() => {
-    // Get user data from localStorage or session
-    const getUserData = () => {
-      try {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        setUserData({
-          user_id: user.id || '8251',
-          user_name: user.name || 'Yazdan',
-          user_email: user.email || 'yazdanmaqsood2@gmail.com',
-          user_no: user.phone || '03156464706',
-        });
-      } catch (e) {
-        console.log('Using default user data');
-      }
-    };
-    getUserData();
-    checkVersion2Status();
-  }, []);
+    if (status !== 'authenticated' || !session?.user?.id) return;
 
-  const checkVersion2Status = async () => {
+    const nextUser = {
+      user_id: String(session.user.id),
+      user_name: session.user.name || '',
+      user_email: session.user.email || '',
+      user_no: session.user.user_no || '',
+    };
+    setUserData(nextUser);
+    checkVersion2Status(nextUser.user_id);
+  }, [status, session?.user?.id]);
+
+  const checkVersion2Status = async (userIdArg) => {
+    const userId = userIdArg || userData.user_id;
+    if (!userId) return;
+
     try {
-      const userId = userData.user_id || '8251';
       const response = await fetch(`${apiUrl}/versionck.php`, {
         method: 'POST',
         headers: {
@@ -66,16 +67,19 @@ export default function Page() {
         }
         setIsVersion2Applied(true);
         setIsVersion2Paid(isPaid);
-        
-        // Save to localStorage
-        localStorage.setItem('isVersion2Paid', JSON.stringify(isPaid));
-        localStorage.setItem('isVersion2Applied', JSON.stringify(true));
+
+        // Cache keys are namespaced per user. The old un-namespaced keys leaked
+        // one account's "paid" status to the next person on the same browser.
+        localStorage.setItem(`mp:${userId}:v2Paid`, JSON.stringify(isPaid));
+        localStorage.setItem(`mp:${userId}:v2Applied`, JSON.stringify(true));
+      } else {
+        setIsVersion2Applied(false);
+        setIsVersion2Paid(false);
       }
     } catch (error) {
       console.error('Error checking version status:', error);
-      // Check localStorage for cached status
-      const cachedPaid = localStorage.getItem('isVersion2Paid');
-      const cachedApplied = localStorage.getItem('isVersion2Applied');
+      const cachedPaid = localStorage.getItem(`mp:${userId}:v2Paid`);
+      const cachedApplied = localStorage.getItem(`mp:${userId}:v2Applied`);
       if (cachedPaid) setIsVersion2Paid(JSON.parse(cachedPaid));
       if (cachedApplied) setIsVersion2Applied(JSON.parse(cachedApplied));
     }
@@ -195,6 +199,11 @@ function VersionSelector({
   };
 
   const handleApply = async () => {
+    if (!userData.user_id) {
+      setApplyStatus({ success: false, message: 'Please log in again before applying.' });
+      return;
+    }
+
     setIsApplying(true);
     setApplyStatus(null);
 
@@ -223,11 +232,16 @@ function VersionSelector({
 
       const result = await response.json();
 
-      if (result.Success === 'true' || result.Success === 'already') {
-        const isAlready = result.Success === 'already';
+      // The PHP side returns "Already" (capital A) in some branches.
+      const successFlag = String(result?.Success || '').toLowerCase();
+      if (successFlag === 'true' || successFlag === 'already') {
+        const isAlready = successFlag === 'already';
         setIsVersion2Applied(true);
-        localStorage.setItem('isVersion2Applied', JSON.stringify(true));
-        
+        localStorage.setItem(`mp:${userData.user_id}:v2Applied`, JSON.stringify(true));
+
+        // Re-read the real status from the API instead of trusting local state.
+        checkVersion2Status(userData.user_id);
+
         setApplyStatus({
           success: true,
           message: isAlready 

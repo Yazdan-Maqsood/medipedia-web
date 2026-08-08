@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Form from '../login/Form';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import { redirect } from 'next/navigation';
 
@@ -27,7 +27,10 @@ export default async function page() {
                         <div className="sign-up-form">
                             <h2>Welcome Back</h2>
                             <p>Fill your email and password to login.</p>
-                            <Form />
+                            {/* Form uses useSearchParams(), which needs a Suspense boundary. */}
+                            <Suspense fallback={null}>
+                                <Form />
+                            </Suspense>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-3 ps-0" />

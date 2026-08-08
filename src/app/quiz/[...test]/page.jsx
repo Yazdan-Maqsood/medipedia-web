@@ -3,16 +3,23 @@ import Link from 'next/link'
 import { SlugToTitle, apiUrl } from '../../config/constant';
 import Data from './Data';
 import Saved from './Saved';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
 export default async function page({ params }) {
-    let datas;
+    const datas = await getServerSession(authOptions);
+
+    // redirect() throws internally, so it must run OUTSIDE the try/catch below.
+    if (!datas?.user?.id) {
+        redirect('/login');
+    }
+
     let data;
     try {
-        datas = await getServerSession(authOptions);
         data = await getData(params.test[3], datas.user.id)
     } catch (error) {
+        console.error('Error fetching quiz data:', error);
         return (
             <section className="courses-category-area ptb-50">
                 <h1 className="text-center">Something went wrong try again later!</h1>
@@ -118,6 +125,9 @@ export async function generateMetadata({ params }) {
 
     try {
         const datas = await getServerSession(authOptions);
+        if (!datas?.user?.id) {
+            return { title: "Quiz - Medipedia" };
+        }
         const data = await getData(params.test[3], datas.user.id)
         return {
             title: "Quiz - " + data.heading,

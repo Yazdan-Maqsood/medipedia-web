@@ -40,6 +40,12 @@ export default function Reprt(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Guard: session is null while NextAuth is still loading and on
+        // public pages. Dereferencing session.user.id here used to throw.
+        if (!session?.user?.id) {
+            toast.error("Your session expired. Please log in again.");
+            return;
+        }
         setError("");
         setfeedbackError("");
 

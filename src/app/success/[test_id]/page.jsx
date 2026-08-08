@@ -1,8 +1,9 @@
 import React from 'react'
 import Data from './Data'
 import { apiUrl } from '../../config/constant';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Quiz Result  - Medipedia",
@@ -11,6 +12,11 @@ export const metadata = {
 
 export default async function page({ params }) {
   const datas = await getServerSession(authOptions);
+
+  if (!datas?.user?.id) {
+    redirect('/login');
+  }
+
   const data = await getData(params.test_id, datas.user.id)
   return (
     <>

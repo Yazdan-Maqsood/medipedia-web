@@ -1,82 +1,87 @@
 import { apiUrl } from './config/constant';
 
+// SITE_URL has no trailing slash, so `SITE_URL + "about-us"` produced
+// "https://medipedia-web.vercel.appabout-us". Normalise once, join properly.
+const siteUrl = (process.env.SITE_URL || 'https://medipedia-web.vercel.app').replace(/\/+$/, '');
+const url = (path = '') => (path ? `${siteUrl}/${path}` : siteUrl);
+
 export default async function sitemap() {
     // Define an array to hold all sitemap entries
     let sitemapEntries = [
         {
-            url: process.env.SITE_URL,
+            url: url(),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "about-us",
+            url: url("about-us"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "contact-us",
+            url: url("contact-us"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "privacy-policy",
+            url: url("privacy-policy"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "dmca-policy",
+            url: url("dmca-policy"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "login",
+            url: url("login"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "register",
+            url: url("register"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "forgot-password",
+            url: url("forgot-password"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "guide",
+            url: url("guide"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "feedback",
+            url: url("feedback"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "saved-quiz",
+            url: url("saved-quiz"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "history",
+            url: url("history"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "book-price",
+            url: url("book-price"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "book-code",
+            url: url("book-code"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "profile",
+            url: url("profile"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "change-email",
+            url: url("change-email"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "change-password",
+            url: url("change-password"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "change-profile-name",
+            url: url("change-profile-name"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
         {
-            url: process.env.SITE_URL + "change-phone-number",
+            url: url("change-phone-number"),
             lastModified: new Date().toISOString(), // Convert date to ISO string for better compatibility
         },
     ];

@@ -12,13 +12,20 @@ const Apply = ({ price, title, slug }) => {
   const router = useRouter();
 
   const applyForCode = async () => {
+    if (!session?.user?.id) {
+      toast.error('Your session expired. Please log in again.');
+      router.push('/login');
+      return;
+    }
+
     setLoading(true);
     const toastId = toast.loading('Applying for code...');
     try {
       const formData = new FormData();
-      formData.append('user_name', session.user.name);
-      formData.append('user_email', session.user.email);
-      formData.append('user_no', session.user_no);
+      formData.append('user_name', session.user.name || '');
+      formData.append('user_email', session.user.email || '');
+      // was `session.user_no` (undefined) — the phone number is on session.user
+      formData.append('user_no', session.user.user_no || '');
       formData.append('user_id', session.user.id);
       formData.append('slug', slug);
 

@@ -17,6 +17,12 @@ export default function Form() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Guard: session is null while NextAuth is still loading and on
+        // public pages. Dereferencing session.user.id here used to throw.
+        if (!session?.user?.id) {
+            toast.error("Your session expired. Please log in again.");
+            return;
+        }
         setError("");
         setfeedbackError("");
 
@@ -26,8 +32,6 @@ export default function Form() {
             setfeedbackError("feedback is required");
             isValid = false; 
         }
-        const pd=profiledata(session.user.id);
-        console.log("okk",pd.user_feedback)
         if (isValid) {
             
             setLoading(true);

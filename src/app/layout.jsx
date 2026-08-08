@@ -4,11 +4,10 @@ import Navbar from "./components/Navbar";
 import HolyLoader from "holy-loader";
 import { SessionProvider } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
-import dotenv from "dotenv"
 
-dotenv.config({
-  path: './.env'
-})
+// NOTE: dotenv.config() used to run here. It is a Node-only API and this is a
+// client component, so it did nothing in the browser except bloat the bundle.
+// Next.js loads .env / Vercel env vars automatically.
 
 export default function RootLayout({ children, session }) {
 
@@ -45,7 +44,7 @@ export default function RootLayout({ children, session }) {
         </>
       </head>
       <body>
-        <SessionProvider session={session}>
+        <SessionProvider session={session} refetchOnWindowFocus={false}>
           <HolyLoader
             color="#19b2ee"
             height="5px"

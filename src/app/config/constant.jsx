@@ -1,7 +1,11 @@
 // config/constant.js
 
-// ✅ Your API base URL
-export const apiUrl = "https://medipedia-web-api.desired-techs.com";
+// API base URL. Override per-environment with NEXT_PUBLIC_API_URL in Vercel.
+// Trailing slashes are stripped so `${apiUrl}/login.php` never becomes a
+// double slash (SiteGround 301-redirects those and drops the POST body).
+export const apiUrl = (
+    process.env.NEXT_PUBLIC_API_URL || "https://medipedia-web-api.desired-techs.com"
+).replace(/\/+$/, "");
 
 // Profile data function
 export const profiledata = async (id) => {

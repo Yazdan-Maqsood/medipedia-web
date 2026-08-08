@@ -4,14 +4,21 @@ import "react-responsive-modal/styles.css";
 import { SlugToTitle, apiUrl } from '../../config/constant';
 import Data from "./Data";
 import Test from "./Test";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
 
 export default async function Page({ params }) {
- 
+
+  const datas = await getServerSession(authOptions);
+
+  // redirect() throws internally, so it must run OUTSIDE the try/catch below.
+  if (!datas?.user?.id) {
+    redirect('/login');
+  }
+
   try {
-    const datas = await getServerSession(authOptions);
     if (params.multiple.length == 2) {
       const data = await getData(params.multiple[1])
       if (!data) {
@@ -83,19 +90,21 @@ export default async function Page({ params }) {
     }
   
   } catch (error) {
-    <section className="courses-category-area ptb-50">
-    <h1 className="text-center">Medipedia Guide</h1>
-    <br />
-    <div className="container mw-1470">
-      <div className="col col-lg-12 row">
-        Something went wrong. Please try again.
-      </div>
-    </div>
-  </section>
+    console.error('Error rendering guide page:', error);
+    // NOTE: this `return` was missing before, so any failure here made the page
+    // render `undefined` and Next.js threw "page did not return valid JSX".
+    return (
+      <section className="courses-category-area ptb-50">
+        <h1 className="text-center">Medipedia Guide</h1>
+        <br />
+        <div className="container mw-1470">
+          <div className="col col-lg-12 row">
+            Something went wrong. Please try again.
+          </div>
+        </div>
+      </section>
+    );
   }
-
-
-
 }
 
 async function getData(params) {
@@ -145,7 +154,7 @@ export async function generateMetadata({ params }) {
  
      }
    } else {
-     const data = await getData2(params.multiple[2], datas.user.id)
+     const data = await getData2(params.multiple[2], datas?.user?.id)
      return {
        title: "Test - " + data.heading,
      }

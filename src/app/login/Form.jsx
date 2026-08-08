@@ -4,9 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams?.get("callbackUrl") || "/";
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -19,27 +22,25 @@ export default function Login() {
         setLoading(true);
 
         try {
-            console.log("1. Submitting login for:", email);
-            
             const result = await signIn("credentials", {
                 email: email,
                 password: password,
                 redirect: false,
             });
 
-            console.log("2. SignIn result:", result);
-
-            if (!result?.error) {
-                console.log("3. Login successful!");
+            if (result?.ok && !result?.error) {
                 toast.success("Login successful!");
-                router.push("/");
+                // router.refresh() first so the server components pick up the
+                // freshly-set session cookie before we navigate.
                 router.refresh();
+                router.push(callbackUrl);
             } else {
-                console.log("4. Login failed:", result.error);
-                toast.error(result.error || "Invalid email or password");
+                const message = result?.error || "Invalid email or password";
+                setError(message);
+                toast.error(message);
             }
         } catch (error) {
-            console.error("5. Login error:", error);
+            console.error("Login error:", error);
             toast.error("Something went wrong. Please try again.");
         } finally {
             setLoading(false);

@@ -3,15 +3,26 @@ import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import { apiUrl } from '../../config/constant';
 import Data from "./Data";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
+import { redirect } from "next/navigation";
 
 export default async function Page({ params }) {
   let datas;
+  let sessionFailed = false;
   try {
     datas = await getServerSession(authOptions);
   } catch (error) {
     console.error('Error fetching session data:', error);
+    sessionFailed = true;
+  }
+
+  // redirect() throws internally, so it must run OUTSIDE the try/catch above.
+  if (!sessionFailed && !datas?.user?.id) {
+    redirect('/login');
+  }
+
+  if (sessionFailed) {
     return (
       <section className="courses-category-area ptb-50">
         <h1 className="text-center"> Something Went wrong. Please try again</h1>
@@ -167,6 +178,10 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  if (!datas?.user?.id) {
+    return { title: "Medipedia Guide" };
+  }
+
   let data;
   try {
     data = await getData(params.book, datas.user.id);
@@ -178,6 +193,6 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: "Book - " + data.heading,
+    title: "Book - " + (data?.heading || "Medipedia Guide"),
   };
 }

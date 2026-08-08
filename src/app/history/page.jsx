@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { apiUrl } from '../config/constant';
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import { redirect } from 'next/navigation'; // <-- Added this
 import Data from './Data';
@@ -14,7 +14,7 @@ export default async function page() {
     const datas = await getServerSession(authOptions);
 
     // ✅ Agar user login NAHI hai, toh seedha login page par bhej dein
-    if (!datas) {
+    if (!datas?.user?.id) {
         redirect('/login');
     }
 

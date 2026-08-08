@@ -85,6 +85,12 @@ export default function Saved(props) {
     }
 
     const sendDataToPHP = async (dataArray, skiparr, alertstatus) => {
+        // Guard: without a session the payload posted user_id=undefined and
+        // the save was silently dropped by the API.
+        if (!session?.user?.id) {
+            toast.error("Your session expired. Please log in again.");
+            return;
+        }
         try {
             console.log(actualduration,duration);
             
