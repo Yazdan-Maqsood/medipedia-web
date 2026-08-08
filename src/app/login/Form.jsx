@@ -11,6 +11,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false); // ← Added this
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,6 +46,11 @@ export default function Login() {
         }
     };
 
+    // ← Added toggle function
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <form className="form-wrap" onSubmit={handleSubmit}>
             <div className="form-floating form-group">
@@ -61,9 +67,11 @@ export default function Login() {
                     Email
                 </label>
             </div>
-            <div className="form-floating form-group">
+
+            {/* ← Updated Password Field with Show/Hide */}
+            <div className="form-floating form-group position-relative">
                 <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'} // ← Changed here
                     className="form-control mb-1"
                     id="password-field1"
                     placeholder="Password"
@@ -74,7 +82,23 @@ export default function Login() {
                 <label htmlFor="password-field1" className="form-label">
                     Password
                 </label>
+                {/* ← Added Show/Hide toggle */}
+                <span 
+                    style={{ 
+                        position: 'absolute', 
+                        right: '29px', 
+                        top: '50%', 
+                        transform: 'translateY(-50%)',
+                        cursor: 'pointer',
+                        zIndex: 10
+                    }} 
+                    onClick={togglePasswordVisibility} 
+                    className="fs-6 me-2"
+                >
+                    <strong>{showPassword ? "Hide" : "Show"}</strong>
+                </span>
             </div>
+
             <div className="submit-btn">
                 <button type="submit" className="main-btn border-0" disabled={loading}>
                     <span>
@@ -88,6 +112,9 @@ export default function Login() {
                     </span>
                 </button>
             </div>
+
+            {error && <p style={{ color: 'red' }} className="error-message">{error}</p>}
+
             <p className="already">
                 <Link href="/forgot-password" className="text-decoration-none">
                     Forgot Password? <br />
