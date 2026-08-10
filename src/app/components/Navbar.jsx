@@ -25,8 +25,9 @@ export default function Navbar() {
         }
     };
 
-    // ✅ Handle guide navigation with router
-    const handleGuideClick = () => {
+    // ✅ Handle guide navigation
+    const handleGuideClick = (e) => {
+        e.preventDefault();
         console.log("Navigating to guide...");
         push('/guide');
     };
@@ -151,16 +152,20 @@ export default function Navbar() {
                             </li>
                         ) : (
                             <>
-                                {/* ✅ FIXED: Using onClick with router */}
+                                {/* ✅ FIXED: Using button with onClick instead of Link */}
                                 <li style={{ borderRadius: '5px' }} className="me-2">
-                                    <button 
+                                    <button
                                         onClick={handleGuideClick}
                                         className="main-btn"
                                         style={{
                                             border: 'none',
+                                            cursor: 'pointer',
                                             background: 'linear-gradient(135deg, #19B2EE, #0D8ECF)',
                                             color: 'white',
-                                            cursor: 'pointer'
+                                            padding: '8px 20px',
+                                            borderRadius: '5px',
+                                            fontSize: '14px',
+                                            fontWeight: '600'
                                         }}
                                     >
                                         <span className="d-none d-xl-block">Medipedia Guide</span>
