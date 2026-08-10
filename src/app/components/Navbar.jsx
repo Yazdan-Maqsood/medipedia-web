@@ -25,12 +25,7 @@ export default function Navbar() {
         }
     };
 
-    // ✅ Handle guide navigation
-    const handleGuideClick = (e) => {
-        e.preventDefault();
-        console.log("Navigating to guide...");
-        window.location.href = '/guide';
-    };
+    // ✅ Note: handleGuideClick function yahan se remove kar diya gaya hai kyunke ab hum Link use kar rahe hain
 
     if (status === "loading") {
         return (
@@ -152,25 +147,21 @@ export default function Navbar() {
                             </li>
                         ) : (
                             <>
-                                {/* ✅ FIXED: Using button with onClick instead of Link */}
+                                {/* ✅ FIXED: Changed button to Next.js Link component */}
                                 <li style={{ borderRadius: '5px' }} className="me-2">
-                                    <button
-                                        onClick={handleGuideClick}
+                                    <Link 
+                                        href="/guide"
                                         className="main-btn"
                                         style={{
                                             border: 'none',
-                                            cursor: 'pointer',
                                             background: 'linear-gradient(135deg, #19B2EE, #0D8ECF)',
                                             color: 'white',
-                                            padding: '8px 20px',
-                                            borderRadius: '5px',
-                                            fontSize: '14px',
-                                            fontWeight: '600'
+                                            display: 'block'
                                         }}
                                     >
                                         <span className="d-none d-xl-block">Medipedia Guide</span>
                                         <div className="d-xl-none">Medipedia Guide</div>
-                                    </button>
+                                    </Link>
                                 </li>
                             </>
                         )}
