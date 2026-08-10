@@ -17,7 +17,6 @@ export default async function Page({ params }) {
     sessionFailed = true;
   }
 
-  // redirect() throws internally, so it must run OUTSIDE the try/catch above.
   if (!sessionFailed && !datas?.user?.id) {
     redirect('/login');
   }
@@ -27,11 +26,7 @@ export default async function Page({ params }) {
       <section className="courses-category-area ptb-50">
         <h1 className="text-center"> Something Went wrong. Please try again</h1>
         <br />
-        <div className="container mw-1470">
-          <div className="col col-lg-12 row">
-
-          </div>
-        </div>
+        <div className="container mw-1470"></div>
       </section>
     );
   }
@@ -39,8 +34,6 @@ export default async function Page({ params }) {
   let data;
   try {
     data = await getData(params.book, datas.user.id);
-    console.log(data);
-
   } catch (error) {
     console.error('Error fetching data:', error);
     return (
@@ -49,21 +42,29 @@ export default async function Page({ params }) {
         <br />
         <div className="container mw-1470">
           <div className="col col-lg-12 row">
-            Oops, there was an issue fetching the data.
+            Oops, there was an issue fetching the data. ({error.message})
           </div>
         </div>
       </section>
     );
   }
 
-  if (!data) {
-    // Handle data fetching error or empty response
+  // ✅ Agar API fail hui toh asal error display hoga
+  if (!data || data.errorFlag) {
     return (
       <section className="courses-category-area ptb-50">
-        <h1 className="text-center">Something went wrong. Please try again.</h1>
+        <h1 className="text-center text-danger">API Error Detected!</h1>
         <br />
         <div className="container mw-1470">
-          <div className="col col-lg-12 row">
+          <div className="col col-lg-12 row text-center">
+            <p>Oops, there was an issue fetching the data from <b>books.php</b>.</p>
+            {data?.message && <p className="text-danger"><b>Reason:</b> {data.message}</p>}
+            {data?.raw && (
+              <div style={{ background: '#f8d7da', padding: '15px', borderRadius: '8px', textAlign: 'left', overflowX: 'auto', border: '1px solid #f5c6cb' }}>
+                <strong>Raw PHP Response:</strong>
+                <pre style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>{data.raw}</pre>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -139,14 +140,12 @@ export default async function Page({ params }) {
             </div>
           </>
         )}
-
-
-
       </section>
     </>
   );
 }
 
+// ✅ Updated getData to catch Raw Text Errors
 async function getData(params, user_id) {
   try {
     const formData = new FormData();
@@ -157,13 +156,17 @@ async function getData(params, user_id) {
       body: formData,
       cache: 'no-store'
     });
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+    
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('API Response (books.php) was not JSON:', text);
+      return { errorFlag: true, raw: text, message: 'Invalid JSON returned from books.php' };
     }
-    return await res.json();
   } catch (error) {
     console.error('Error fetching data:', error);
-    throw error; // Re-throw error to be handled in the calling function
+    return { errorFlag: true, raw: '', message: error.message };
   }
 }
 
@@ -172,10 +175,7 @@ export async function generateMetadata({ params }) {
   try {
     datas = await getServerSession(authOptions);
   } catch (error) {
-    console.error('Error fetching session data:', error);
-    return {
-      title: "Error - Medipedia Guide",
-    };
+    return { title: "Error - Medipedia Guide" };
   }
 
   if (!datas?.user?.id) {
@@ -185,11 +185,9 @@ export async function generateMetadata({ params }) {
   let data;
   try {
     data = await getData(params.book, datas.user.id);
+    if (data?.errorFlag) return { title: "Error Loading Data" };
   } catch (error) {
-    console.error('Error fetching data:', error);
-    return {
-      title: "Something went wrong",
-    };
+    return { title: "Something went wrong" };
   }
 
   return {

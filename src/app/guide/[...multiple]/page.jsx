@@ -10,10 +10,8 @@ import { redirect } from "next/navigation";
 
 
 export default async function Page({ params }) {
-
   const datas = await getServerSession(authOptions);
 
-  // redirect() throws internally, so it must run OUTSIDE the try/catch below.
   if (!datas?.user?.id) {
     redirect('/login');
   }
@@ -21,21 +19,29 @@ export default async function Page({ params }) {
   try {
     if (params.multiple.length == 2) {
       const data = await getData(params.multiple[1])
-      if (!data) {
-        // Handle data fetching error or empty response
+      
+      // ✅ Agar API fail hui ya JSON error aaya, toh ab screen par saaf likha aayega
+      if (!data || data.errorFlag) {
         return (
           <section className="courses-category-area ptb-50">
-            <h1 className="text-center">Something went wrong. Please try again</h1>
+            <h1 className="text-center text-danger">API Error Detected!</h1>
             <br />
             <div className="container mw-1470">
-              <div className="col col-lg-12 row">
-                Oops, there was an issue fetching the data.
+              <div className="col col-lg-12 row text-center">
+                <p>Oops, there was an issue fetching the data from <b>papers.php</b>.</p>
+                {data?.message && <p className="text-danger"><b>Reason:</b> {data.message}</p>}
+                {data?.raw && (
+                  <div style={{ background: '#f8d7da', padding: '15px', borderRadius: '8px', textAlign: 'left', overflowX: 'auto', border: '1px solid #f5c6cb' }}>
+                    <strong>Raw PHP Response:</strong>
+                    <pre style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>{data.raw}</pre>
+                  </div>
+                )}
               </div>
             </div>
           </section>
         );
       }
-  
+
       return (
         <>
           <section className="courses-category-area ptb-50">
@@ -49,25 +55,33 @@ export default async function Page({ params }) {
               </div>
             </div>
           </section>
-  
         </>
       );
     } else {
       const data = await getData2(params.multiple[2], datas.user.id)
-      if (!data) {
-        // Handle data fetching error or empty response
+      
+      // ✅ Same Error Catcher for test.php
+      if (!data || data.errorFlag) {
         return (
           <section className="courses-category-area ptb-50">
-            <h1 className="text-center">Something went wrong. Please try again</h1>
+            <h1 className="text-center text-danger">API Error Detected!</h1>
             <br />
             <div className="container mw-1470">
-              <div className="col col-lg-12 row">
-                Oops, there was an issue fetching the data.
+              <div className="col col-lg-12 row text-center">
+                <p>Oops, there was an issue fetching the data from <b>test.php</b>.</p>
+                {data?.message && <p className="text-danger"><b>Reason:</b> {data.message}</p>}
+                {data?.raw && (
+                  <div style={{ background: '#f8d7da', padding: '15px', borderRadius: '8px', textAlign: 'left', overflowX: 'auto', border: '1px solid #f5c6cb' }}>
+                    <strong>Raw PHP Response:</strong>
+                    <pre style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>{data.raw}</pre>
+                  </div>
+                )}
               </div>
             </div>
           </section>
         );
       }
+
       return (
         <>
           <section className="courses-category-area ptb-50">
@@ -81,25 +95,18 @@ export default async function Page({ params }) {
               </div>
             </div>
           </section>
-  
         </>
       );
-  
-  
-  
     }
-  
   } catch (error) {
     console.error('Error rendering guide page:', error);
-    // NOTE: this `return` was missing before, so any failure here made the page
-    // render `undefined` and Next.js threw "page did not return valid JSX".
     return (
       <section className="courses-category-area ptb-50">
         <h1 className="text-center">Medipedia Guide</h1>
         <br />
         <div className="container mw-1470">
           <div className="col col-lg-12 row">
-            Something went wrong. Please try again.
+            Something went wrong rendering the page. Please try again.
           </div>
         </div>
       </section>
@@ -107,6 +114,7 @@ export default async function Page({ params }) {
   }
 }
 
+// ✅ Updated getData to catch Raw Text Errors
 async function getData(params) {
   try {
     const formData = new FormData();
@@ -115,15 +123,22 @@ async function getData(params) {
       method: 'POST',
       body: formData,
       cache: 'no-store'
-    })
-    return res.json()
+    });
+
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('API Response (papers.php) was not JSON:', text);
+      return { errorFlag: true, raw: text, message: 'Invalid JSON returned from papers.php' };
+    }
   } catch (error) {
     console.error('Error fetching data:', error);
-    return null; // Indicate error without specific message
+    return { errorFlag: true, raw: '', message: error.message };
   }
 }
 
-
+// ✅ Updated getData2 to catch Raw Text Errors
 async function getData2(params, user_id) {
   try {
     const formData = new FormData();
@@ -133,36 +148,34 @@ async function getData2(params, user_id) {
       method: 'POST',
       body: formData,
       cache: 'no-store'
-    })
-    return res.json()
+    });
+
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error('API Response (test.php) was not JSON:', text);
+      return { errorFlag: true, raw: text, message: 'Invalid JSON returned from test.php' };
+    }
   } catch (error) {
     console.error('Error fetching data:', error);
-    return null; // Indicate error without specific message
+    return { errorFlag: true, raw: '', message: error.message };
   }
 }
 
-
-
 export async function generateMetadata({ params }) {
-
- try {
-   const datas = await getServerSession(authOptions);
-   if (params.multiple.length == 2) {
-     const data = await getData(params.multiple[1])
-     return {
-       title: "Paper - " + data.heading,
- 
-     }
-   } else {
-     const data = await getData2(params.multiple[2], datas?.user?.id)
-     return {
-       title: "Test - " + data.heading,
-     }
-   }
- } catch (error) {
-  return {
-    title: "Something went wrong"
-
+  try {
+    const datas = await getServerSession(authOptions);
+    if (params.multiple.length == 2) {
+      const data = await getData(params.multiple[1])
+      if (data?.errorFlag) return { title: "Error Loading Data" };
+      return { title: "Paper - " + data.heading }
+    } else {
+      const data = await getData2(params.multiple[2], datas?.user?.id)
+      if (data?.errorFlag) return { title: "Error Loading Data" };
+      return { title: "Test - " + data.heading }
+    }
+  } catch (error) {
+    return { title: "Something went wrong" }
   }
- }
 }

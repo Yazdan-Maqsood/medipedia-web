@@ -149,7 +149,7 @@ export default function Navbar() {
                             <>
                                 {/* ✅ FIXED: Changed button to Next.js Link component */}
                                 <li style={{ borderRadius: '5px' }} className="me-2">
-                                    <a 
+                                    <Link
                                         href="/guide"
                                         className="main-btn"
                                         style={{
@@ -161,7 +161,7 @@ export default function Navbar() {
                                     >
                                         <span className="d-none d-xl-block">Medipedia Guide</span>
                                         <div className="d-xl-none">Medipedia Guide</div>
-                                    </a>
+                                    </Link>
                                 </li>
                             </>
                         )}
