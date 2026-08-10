@@ -29,7 +29,7 @@ export default function Navbar() {
     const handleGuideClick = (e) => {
         e.preventDefault();
         console.log("Navigating to guide...");
-        push('/guide');
+        window.location.href = '/guide';
     };
 
     if (status === "loading") {
